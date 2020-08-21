@@ -15,12 +15,12 @@ def client_to_server(board):
     """
     result = [["noPiece" for i in range(8)] for j in range(8)]
     for row_num in range(0, len(board)):
-        for column_num in range(0, len(row_num)):
-            # Skip if noPiece
+        for column_num in range(0, len(board[row_num])):
+            # Skip if
             if board[row_num][column_num] == "noPiece":
-                pass
+                continue
 
-            first_char = result[row_num][column_num]
+            first_char = board[row_num][column_num][:1]
 
             # Set piece color
             piece_color = "white"
@@ -28,7 +28,7 @@ def client_to_server(board):
                 piece_color = "black"
 
             # Create each
-            piece_type = result[row_num][column_num][:5]
+            piece_type = board[row_num][column_num][5:]
             if piece_type == "Rook":
                 result[row_num][column_num] = Rook(piece_color, row_num, column_num)
             elif piece_type == "Knight":
@@ -39,7 +39,7 @@ def client_to_server(board):
                 result[row_num][column_num] = Queen(piece_color, row_num, column_num)
             elif piece_type == "King":
                 result[row_num][column_num] = King(piece_color, row_num, column_num)
-            else:
+            elif piece_type == "Pawn":
                 result[row_num][column_num] = Pawn(piece_color, row_num, column_num)
 
     return result
@@ -53,10 +53,10 @@ def server_to_client(board):
     """
     result = [["noPiece" for i in range(8)] for j in range(8)]
     for row_num in range(0, len(board)):
-        for column_num in range(0, len(row_num)):
+        for column_num in range(0, len(board[row_num])):
             # Skip if noPiece
             if board[row_num][column_num] == "noPiece":
-                pass
+                continue
 
             piece_type = type(board[row_num][column_num])
             piece_string = board[row_num][column_num].getColor()
@@ -72,7 +72,7 @@ def server_to_client(board):
                 piece_string += "Queen"
             elif piece_type is King:
                 piece_string += "King"
-            else:
+            elif piece_type is Pawn:
                 piece_string += "Pawn"
 
             result[row_num][column_num] = piece_string
@@ -81,7 +81,7 @@ def server_to_client(board):
 
 # Some temp tests
 if __name__ == "__main__":
-    clientToServer = client_to_server([
+    client_board = [
 	        ["blackRook", "blackKnight", "blackBishop", "blackQueen", "blackKing", "blackBishop", "blackKnight", "blackRook"],
 	        ["blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn"],
 	        ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
@@ -90,6 +90,9 @@ if __name__ == "__main__":
 	        ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
 	        ["whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn"],
 	        ["whiteRook", "whiteKnight", "whiteBishop", "whiteQueen", "whiteKing", "whiteBishop", "whiteKnight", "whiteRook"]
-	    ])
+	    ]
 
-    serverToClient = server_to_client(clientToServer)
+    client_to_server_board = client_to_server(client_board)
+    server_to_client_board = server_to_client(client_to_server_board)
+
+    print("Do translations function correctly:", client_board == server_to_client_board)

@@ -26,7 +26,7 @@ def restart_vars():
 	players[2] = None
 
 
-@app.route('/startGame')
+@app.route('/startGame', methods=['GET', 'POST'])
 @cross_origin()
 def start_game():
 	global player_count
@@ -52,7 +52,7 @@ def start_game():
 	return jsonify({"status_code": 200, "player_number": player_count, "color": players[player_count].color})
 
 
-@app.route('/quitGame')
+@app.route('/quitGame', methods=['GET', 'POST'])
 @cross_origin()
 def quit_game():
 	global player_count
@@ -81,7 +81,7 @@ def quit_game():
 		}
 	)
 
-@app.route('/waitForPlayer')
+@app.route('/waitForPlayer', methods=['GET', 'POST'])
 @cross_origin()
 def wait_for_player():
 	global player_count
@@ -111,7 +111,7 @@ def wait_for_player():
 				}
 			)
 
-@app.route('/waitForTurn')
+@app.route('/waitForTurn', methods=['GET', 'POST'])
 @cross_origin()
 def wait_for_turn():
 	global board
@@ -170,7 +170,7 @@ def wait_for_turn():
 	)
 
 
-@app.route('/submitBoard')
+@app.route('/submitBoard', methods=['GET', 'POST'])
 @cross_origin()
 def submit_board():
 	global board

@@ -65,26 +65,41 @@ if __name__ == "__main__":
     #                 print(piece.rep, "at ", i, j, "has: ", moves)
 
 
-    """Fool's mate test"""
-    # b.movePieceFast(1, 2, 2, 2)
-    # b.movePieceFast(6, 3, 4, 3)
-    # b.movePieceFast(1, 1, 3, 1)
-    # b.movePieceFast(7, 4, 3, 0)
+    """Fool's mate test (white mated)"""
+    # b.movePieceFast(6, 5, 5, 5)
+    # b.movePieceFast(1, 4, 3, 4)
+    # b.movePieceFast(6, 6, 4, 6)
+    # b.movePieceFast(0, 3, 4, 7)
 
-    """Scholar's Mate"""
-    # b.movePieceFast(1, 3, 3, 3)
-    # b.movePieceFast(6, 3, 4, 3)
-    # b.movePieceFast(0, 2, 3, 5)
-    # b.movePieceFast(7, 6, 5, 5)
-    # b.movePieceFast(0, 4, 4, 0)
-    # b.movePieceFast(0, 1, 5, 2)
-    # b.movePieceFast(4, 0, 6, 2)
+    """Scholar's Mate (black mated)"""
+    # b.movePieceFast(6, 4, 4, 4)
+    # b.movePieceFast(1, 4, 3, 4)
+    # b.movePieceFast(7, 5, 4, 2)
+    # b.movePieceFast(0, 1, 2, 2)
+    # b.movePieceFast(7, 3, 3, 7)
+    # b.movePieceFast(0, 6, 2, 5)
+    # b.takePieceFast(3, 7, 1, 5)
 
     # b.printBoardWhite()
+
+    # b.movePieceFast(0, 0, 5, 4)
+
+    """Castle tests"""
+    # b.movePieceFast(0, 5, 5, 5)
+    # b.movePieceFast(0, 6, 5, 6)
+    # b.movePieceFast(0, 3, 5, 3)
+    # b.movePieceFast(0, 2, 5, 2)
+    # b.movePieceFast(0, 1, 5, 1)
+
+    """En Passant test"""
+    # b.movePieceFast(1, 5, 4, 5)
+    # b.movePieceFast(6, 6, 4, 6)
+
+
 
     # print("Is the king in check?", b.isCheck("white"))
     b.printBoardWhite()
 
-    print(b.getLegalMoves("black"))
+    print(b.getLegalMoves("white"))
 
 

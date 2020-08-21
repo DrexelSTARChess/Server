@@ -13,6 +13,7 @@ class Pawn(ChessPiece):
         super(Pawn, self).__init__(color, i, j)
         self.rep = "P"
         self.notMoved = True
+        self.enpassant = False
 
     def getPossibleMoves(self, board):
 
@@ -25,13 +26,14 @@ class Pawn(ChessPiece):
         #if its white, add 1 to the y value, else subtract 1, have a bounds check
         movementFactor = 0
         if self.color == "white":
-            movementFactor = 1
-        else:
             movementFactor = -1
+        else:
+            movementFactor = 1
 
         if board[self.i + (movementFactor * 2)][self.j] == "noPiece" and self.isBoundedSquare(self.i + (movementFactor * 2), self.j) and self.notMoved:
             move = "%d,%d" % (self.i + (movementFactor*2), self.j)
             self.notMoved = False
+            self.enpassant = True
             possibleMoves.append(move)
         if board[self.i + movementFactor][self.j] == "noPiece" and self.isBoundedSquare(self.i + movementFactor, self.j):
             move = "%d,%d" % (self.i + movementFactor, self.j)
@@ -45,8 +47,16 @@ class Pawn(ChessPiece):
             move = "x%d,%d" % (self.i + movementFactor, self.j + 1)
             self.notMoved = False
             possibleMoves.append(move)
-
-        """implement pawn promotion here by returning a new piece type"""
+        if self.isBoundedSquare(self.i + movementFactor, self.j - 1) and board[self.i + movementFactor][self.j - 1] == "noPiece" and board[self.i][self.j - 1] != "noPiece" and board[self.i][self.j - 1].color != self.color and board[self.i][self.j - 1].rep == "P" \
+                and board[self.i][self.j - 1].enpassant:
+            move = "x%d,%d" % (self.i, self.j - 1)
+            self.notMoved = False
+            possibleMoves.append(move)
+        if self.isBoundedSquare(self.i + movementFactor, self.j + 1) and board[self.i + movementFactor][self.j + 1] == "noPiece" and board[self.i][self.j + 1] != "noPiece" and board[self.i][self.j + 1].color != self.color and board[self.i][self.j + 1].rep == "P" \
+                and board[self.i][self.j + 1].enpassant:
+            move = "x%d,%d" % (self.i, self.j + 1)
+            self.notMoved = False
+            possibleMoves.append(move)
 
 
         return possibleMoves

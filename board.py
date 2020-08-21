@@ -12,14 +12,14 @@ class Board:
     def __init__(self):
         super(Board, self).__init__()
         self.board = [
-            [Rook("white", 0, 0), Knight("white", 0, 1), Bishop("white", 0, 2), King("white", 0, 3), Queen("white", 0, 4), Bishop("white", 0, 5), Knight("white", 0, 6), Rook("white", 0, 7)],
-            [Pawn("white", 1, 0), Pawn("white", 1, 1), Pawn("white", 1, 2), Pawn("white", 1, 3), Pawn("white", 1, 4), Pawn("white", 1, 5), Pawn("white", 1, 6), Pawn("white", 1, 7)],
+            [Rook("black", 0, 0), Knight("black", 0, 1), Bishop("black", 0, 2), Queen("black", 0, 3), King("black", 0, 4), Bishop("black", 0, 5), Knight("black", 0, 6), Rook("black", 0, 7)],
+            [Pawn("black", 1, 0), Pawn("black", 1, 1), Pawn("black", 1, 2), Pawn("black", 1, 3), Pawn("black", 1, 4), Pawn("black", 1, 5), Pawn("black", 1, 6), Pawn("black", 1, 7)],
             ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
             ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
             ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
             ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
-            [Pawn("black", 6, 0), Pawn("black", 6, 1), Pawn("black", 6, 2), Pawn("black", 6, 3), Pawn("black", 6, 4), Pawn("black", 6, 5), Pawn("black", 6, 6), Pawn("black", 6, 7)],
-            [Rook("black", 7, 0), Knight("black", 7, 1),  Bishop("black", 7, 2), King("black", 7, 3), Queen("black", 7, 4), Bishop("black", 7, 5), Knight("black", 7, 6), Rook("black", 7, 7)]
+            [Pawn("white", 6, 0), Pawn("white", 6, 1), Pawn("white", 6, 2), Pawn("white", 6, 3), Pawn("white", 6, 4), Pawn("white", 6, 5), Pawn("white", 6, 6), Pawn("white", 6, 7)],
+            [Rook("white", 7, 0), Knight("white", 7, 1),  Bishop("white", 7, 2), Queen("white", 7, 3), King("white", 7, 4), Bishop("white", 7, 5), Knight("white", 7, 6), Rook("white", 7, 7)]
         ]
 
     def setBoard(self, newBoard):
@@ -97,7 +97,7 @@ class Board:
 
         return []
 
-    def printBoardBlack(self):
+    def printBoardWhite(self):
         """testing, just print board"""
         print("-"*35)
         for i in range(8):
@@ -110,7 +110,7 @@ class Board:
             print()
             print()
 
-    def printBoardWhite(self):
+    def printBoardBlack(self):
         print("-" * 35)
         for i in range(7, -1, -1):
             for j in range(7, -1, -1):
@@ -149,7 +149,7 @@ class Board:
     def getLegalMoves(self, playerColor):
         """This function is to get all legal moves for pieces and format them nicely for Alex
             In addition, this is going to make sure that moves are legally applied as to not put the king in check
-            In the amount of moves leaving this function is 0, then playerColor is in checkmate and the game is over
+            If the amount of moves leaving this function is 0, then playerColor is in checkmate and the game is over
 
             In order to do this we must first iterate through every move of everypiece and add it to a new Board and then
             evaluate if there is a check for playerColor. If not, add to the legal movelist in a nice format, otherwise dont add it
@@ -176,6 +176,8 @@ class Board:
                                     newBoard.board[x][y] = "noPiece"
                                 elif self.board[x][y].rep == "P":
                                     newBoard.board[x][y] = Pawn(self.board[x][y].color, x, y)
+                                    newBoard.board[x][y].enpassant = self.board[x][y].enpassant
+                                    newBoard.board[x][y].notMoved = self.board[x][y].notMoved
                                 elif self.board[x][y].rep == "N":
                                     newBoard.board[x][y] = Knight(self.board[x][y].color, x, y)
                                 elif self.board[x][y].rep == "B":
@@ -184,8 +186,10 @@ class Board:
                                     newBoard.board[x][y] = Queen(self.board[x][y].color, x, y)
                                 elif self.board[x][y].rep == "R":
                                     newBoard.board[x][y] = Rook(self.board[x][y].color, x, y)
+                                    newBoard.board[x][y].canCastle = self.board[x][y].canCastle
                                 elif self.board[x][y].rep == "K":
                                     newBoard.board[x][y] = King(self.board[x][y].color, x, y)
+                                    newBoard.board[x][y].canCastle = self.board[x][y].canCastle
 
                         # newBoard.printBoardWhite()
                         # print("MOVE: ", piece.color+piece.rep, move)
@@ -196,6 +200,11 @@ class Board:
                             takeX = int(parseMove[0])
                             takeY = int(parseMove[1])
                             newBoard.takePieceFast(i, j, takeX, takeY)
+                        elif move.startswith("c"):
+                            if "-" in move:
+                                legalMoves.append([0, 0, 0, 0])  # queen side castle
+                            else:
+                                legalMoves.append([1, 0, 0, 0])  # king side castle
                         else:
                             parseMove= move.split(",")
                             takeX = int(parseMove[0])

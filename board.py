@@ -70,9 +70,10 @@ class Board:
         kj = 0
         for i in range(8):
             for j in range(8):
-                if not self.isSquareEmpty(i, j) and self.board[i][j].rep == "K":  # find the king
+                if not self.isSquareEmpty(i, j) and self.board[i][j].rep == "K" and self.board[i][j].color == playerColor:  # find the king
                     ki = i
                     kj = j
+        # print("found king at", ki, kj)
         allmoves = []
         for i in range(8):
             for j in range(8):
@@ -144,6 +145,68 @@ class Board:
 
     def notKing(self, x, y):
         return self.board[x][y].rep != "K"
+
+    def getLegalMoves(self, playerColor):
+        """This function is to get all legal moves for pieces and format them nicely for Alex
+            In addition, this is going to make sure that moves are legally applied as to not put the king in check
+            In the amount of moves leaving this function is 0, then playerColor is in checkmate and the game is over
+
+            In order to do this we must first iterate through every move of everypiece and add it to a new Board and then
+            evaluate if there is a check for playerColor. If not, add to the legal movelist in a nice format, otherwise dont add it
+            somewhere in here, take out attacking the king
+
+            pray that this works somehow
+            """
+        legalMoves = []
+
+        for i in range(8):
+            for j in range(8):
+                if not self.isSquareEmpty(i, j) and self.board[i][j].color == playerColor:  # for every piece...
+                    # get the moveset of the piece...
+                    piece = self.board[i][j]
+                    moves = piece.getPossibleMoves(self.board)
+                    # and then the magic, apply each move here to a new board
+
+                    for move in moves:
+                        # first create a new board, and copy pieces
+                        newBoard = Board()
+                        for x in range(8):
+                            for y in range(8):
+                                if self.isSquareEmpty(x, y):
+                                    newBoard.board[x][y] = "noPiece"
+                                elif self.board[x][y].rep == "P":
+                                    newBoard.board[x][y] = Pawn(self.board[x][y].color, x, y)
+                                elif self.board[x][y].rep == "N":
+                                    newBoard.board[x][y] = Knight(self.board[x][y].color, x, y)
+                                elif self.board[x][y].rep == "B":
+                                    newBoard.board[x][y] = Bishop(self.board[x][y].color, x, y)
+                                elif self.board[x][y].rep == "Q":
+                                    newBoard.board[x][y] = Queen(self.board[x][y].color, x, y)
+                                elif self.board[x][y].rep == "R":
+                                    newBoard.board[x][y] = Rook(self.board[x][y].color, x, y)
+                                elif self.board[x][y].rep == "K":
+                                    newBoard.board[x][y] = King(self.board[x][y].color, x, y)
+
+                        # newBoard.printBoardWhite()
+                        # print("MOVE: ", piece.color+piece.rep, move)
+                        # print(newBoard.isCheck(playerColor))
+                        # now apply the move of interest
+                        if move.startswith("x"):
+                            parseMove = move[1:].split(",")
+                            takeX = int(parseMove[0])
+                            takeY = int(parseMove[1])
+                            newBoard.takePieceFast(i, j, takeX, takeY)
+                        else:
+                            parseMove= move.split(",")
+                            takeX = int(parseMove[0])
+                            takeY = int(parseMove[1])
+                            newBoard.takePieceFast(i, j, takeX, takeY)
+                        # newBoard.printBoardWhite()
+                        # now evaluate the board for check for playerColor
+                        if not newBoard.isCheck(playerColor):
+                            legalMoves.append([i, j, takeX, takeY])
+
+        return legalMoves
 
 
 

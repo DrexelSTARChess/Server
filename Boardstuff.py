@@ -47,6 +47,13 @@ if __name__ == "__main__":
     # print("Is the king in check?", b.isCheck("black"))
     # b.printBoardWhite()
 
+    """King test"""
+    # b.movePieceFast(0, 3, 5, 2)
+    # print(b.board[5][2].getLoc())
+    # print(b.board[5][2].getPossibleMoves(b.board))
+    # print("Is the king in check?", b.isCheck("white"))
+    # b.printBoardWhite()
+
     # for i in range(8):
     #     for j in range(8):
     #         piece = b.board[i][j]
@@ -56,5 +63,28 @@ if __name__ == "__main__":
     #                 print(piece.rep, "at ", i, j, "has no moves")
     #             else:
     #                 print(piece.rep, "at ", i, j, "has: ", moves)
+
+
+    """Fool's mate test"""
+    # b.movePieceFast(1, 2, 2, 2)
+    # b.movePieceFast(6, 3, 4, 3)
+    # b.movePieceFast(1, 1, 3, 1)
+    # b.movePieceFast(7, 4, 3, 0)
+
+    """Scholar's Mate"""
+    # b.movePieceFast(1, 3, 3, 3)
+    # b.movePieceFast(6, 3, 4, 3)
+    # b.movePieceFast(0, 2, 3, 5)
+    # b.movePieceFast(7, 6, 5, 5)
+    # b.movePieceFast(0, 4, 4, 0)
+    # b.movePieceFast(0, 1, 5, 2)
+    # b.movePieceFast(4, 0, 6, 2)
+
     # b.printBoardWhite()
+
+    # print("Is the king in check?", b.isCheck("white"))
+    b.printBoardWhite()
+
+    print(b.getLegalMoves("black"))
+
 

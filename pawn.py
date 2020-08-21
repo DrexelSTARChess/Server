@@ -29,7 +29,7 @@ class Pawn(ChessPiece):
         else:
             movementFactor = -1
 
-        if board[self.i + movementFactor][self.j] == "noPiece" and self.isBoundedSquare(self.i + movementFactor, self.j) and self.notMoved:
+        if board[self.i + (movementFactor * 2)][self.j] == "noPiece" and self.isBoundedSquare(self.i + (movementFactor * 2), self.j) and self.notMoved:
             move = "%d,%d" % (self.i + (movementFactor*2), self.j)
             self.notMoved = False
             possibleMoves.append(move)

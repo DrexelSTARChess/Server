@@ -276,3 +276,81 @@ class ChessPiece(ABC):
                 possibleMoves.append(move)
 
         return possibleMoves
+
+    def getKingMoves(self, board):
+        possibleMoves = []
+        movei = self.i + 1
+        movej = self.j + 0
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+        movei = self.i - 1
+        movej = self.j + 0
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+        movei = self.i + 0
+        movej = self.j + 1
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+        movei = self.i + 0
+        movej = self.j - 1
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+
+        movei = self.i + 1
+        movej = self.j + 1
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+        movei = self.i + 1
+        movej = self.j - 1
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+        movei = self.i - 1
+        movej = self.j + 1
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+        movei = self.i - 1
+        movej = self.j - 1
+        if self.isBoundedSquare(movei, movej):
+            if board[movei][movej] == "noPiece":
+                move = "%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+            elif board[movei][movej].color != self.color:
+                move = "x%d,%d" % (movei, movej)
+                possibleMoves.append(move)
+
+        return possibleMoves

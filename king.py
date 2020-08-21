@@ -9,5 +9,4 @@ class King(ChessPiece):
         self.rep = "K"
 
     def getPossibleMoves(self, board):
-        print("Havn't done king possible moves yet!")
-        return []
+        return self.getKingMoves(board)

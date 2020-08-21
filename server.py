@@ -9,6 +9,7 @@ from player import Player
 
 app = Flask(__name__)
 CORS(app)
+
 player_count = 0
 board = None
 players = {1: None, 2: None}
@@ -26,6 +27,7 @@ def restart_vars():
 
 
 @app.route('/startGame')
+@cross_origin()
 def start_game():
 	global player_count
 	global board
@@ -51,6 +53,7 @@ def start_game():
 
 
 @app.route('/quitGame')
+@cross_origin()
 def quit_game():
 	global player_count
 	arguments = request.get_json()
@@ -79,6 +82,7 @@ def quit_game():
 	)
 
 @app.route('/waitForPlayer')
+@cross_origin()
 def wait_for_player():
 	global player_count
 	arguments = request.get_json()
@@ -108,6 +112,7 @@ def wait_for_player():
 			)
 
 @app.route('/waitForTurn')
+@cross_origin()
 def wait_for_turn():
 	global board
 	global player_count
@@ -166,6 +171,7 @@ def wait_for_turn():
 
 
 @app.route('/submitBoard')
+@cross_origin()
 def submit_board():
 	global board
 	# We need to let wait_for_turn know to move on

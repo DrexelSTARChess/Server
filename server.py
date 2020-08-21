@@ -4,18 +4,23 @@ import gameHandler
 
 app = Flask(__name__)
 
+
 @app.route('/startGame')
 def startGame():
-	return
+    # gameHandler.startGame("test") ??
+    return
+
 
 @app.route('/quitGame')
 def quitGame():
-	return
+    return
+
 
 @app.route('/waitForTurn')
 def waitForTurn():
-	return
+    return
+
 
 @app.route('/submitBoard')
 def submitBoard():
-	return
+    return

@@ -65,6 +65,22 @@ class Board:
         :param playerColor:
         :return:
         """
+
+        ki = 0
+        kj = 0
+        for i in range(8):
+            for j in range(8):
+                if not self.isSquareEmpty(i, j) and self.board[i][j].rep == "K":  # find the king
+                    ki = i
+                    kj = j
+        allmoves = []
+        for i in range(8):
+            for j in range(8):
+                if not self.isSquareEmpty(i, j) and self.board[i][j].color != playerColor:
+                    allmoves += self.board[i][j].getPossibleMoves(self.board)
+        kings = "x%d,%d" % (ki, kj)
+        if kings in allmoves:
+            return True
         return False
 
     def quit(self, playerColor):
@@ -128,3 +144,8 @@ class Board:
 
     def notKing(self, x, y):
         return self.board[x][y].rep != "K"
+
+
+
+
+

@@ -1,4 +1,5 @@
 from flask import Flask, escape, request, jsonify
+from flask_cors import CORS, cross_origin
 import time
 
 from board import Board
@@ -7,6 +8,7 @@ from helper import player_num_to_color, get_other_player_num
 from player import Player
 
 app = Flask(__name__)
+CORS(app)
 player_count = 0
 board = None
 players = {1: None, 2: None}

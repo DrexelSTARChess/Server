@@ -1,6 +1,7 @@
+from board import Board
 
-def clientToServer():
-	return new Board()
+def clientToServer(board):
+	return Board()
 
-def serverToClient():
-	return new [][]
+def serverToClient(board):
+	return []

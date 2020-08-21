@@ -1,7 +1,7 @@
 from flask import Flask, escape, request, jsonify
 import time
 
-from board import *
+from board import Board
 from boardTranslator import clientToServer, serverToClient
 from helper import player_num_to_color, get_other_player_num
 from player import Player
@@ -12,10 +12,25 @@ board = None
 players = {1: None, 2: None}
 
 
+def restart_vars():
+	global player_count
+	global board
+	global players
+
+	player_count = 0
+	board = None
+	players[1] = None
+	players[2] = None
+
+
 @app.route('/startGame')
 def start_game():
 	global player_count
 	global board
+
+	# Reset if player_count goes to 0
+	if player_count <= 0:
+		restart_vars()
 
 	# Server is full, cannot accept new players
 	if player_count >= 2:
@@ -25,17 +40,41 @@ def start_game():
 	player_count += 1
 	if player_count == 1:
 		players[1] = Player("white")
+		players[1].is_turn = True
 		board = Board()
 	else:
 		players[2] = Player("black")
 
-	return jsonify({"status_code": 200, "player": player_count, "color": players[player_count].color})
+	return jsonify({"status_code": 200, "player_number": player_count, "color": players[player_count].color})
 
 
 @app.route('/quitGame')
 def quit_game():
-	return
+	global player_count
+	arguments = request.get_json()
 
+	# Setting attributes for quitting player
+	quitting_player_num = arguments["player_number"]
+	quitting_player = players[quitting_player_num]
+	quitting_player.has_lost = True
+
+	# Setting attributes for winning player
+	winning_player_num = get_other_player_num(quitting_player_num)
+	winning_player = players[winning_player_num]
+	if winning_player is not None:
+		winning_player.has_won = True
+
+	player_count -= 1
+
+	return jsonify(
+		{
+			"status_code": 200,
+			"board_data": serverToClient(board),
+			"move_data": [],
+			"won": False,
+			"lost": True,
+		}
+	)
 
 @app.route('/waitForPlayer')
 def wait_for_player():
@@ -44,26 +83,43 @@ def wait_for_player():
 	player_number = arguments["player_number"]
 
 	while player_count < 2:
+		if players[player_number].has_lost:
+			player_count -= 1
+			return jsonify(
+				{
+					"status_code": 200,
+					"board_data": serverToClient(board),
+					"move_data": [],
+					"won": False,
+					"lost": True,
+				}
+			)
+
 		time.sleep(0.5)
 
 	return jsonify(
 				{
 					"status_code": 200,
-					"boardData": serverToClient(board),
-					"moveData": board.generateMoves(player_num_to_color[player_number])
+					"board_data": serverToClient(board),
+					"move_data": board.generateMoves(player_num_to_color[player_number])
 				}
 			)
-
 
 @app.route('/waitForTurn')
 def wait_for_turn():
 	global board
+	global player_count
 
 	arguments = request.get_json()
 	player_number = arguments["player_number"]
-	current_player = players[player_number]
-	# Check if current_player has won
-	if current_player.has_won:
+	waiting_player = players[player_number]
+	# Wait for other player's turn to end or for someone to forfeit
+	while not waiting_player.is_turn and not waiting_player.has_lost and not waiting_player.has_won:
+		time.sleep(0.5)
+
+	# Check if waiting_player has won
+	if waiting_player.has_won:
+		player_count -= 1
 		return jsonify(
 			{
 				"status_code": 200,
@@ -74,15 +130,17 @@ def wait_for_turn():
 			}
 		)
 
-	# Wait other player's turn to end
-	while current_player.is_turn == False:
-		time.sleep(0.5)
-
 	# If game is over, then this player has lost
-	moves = board.generateMoves(current_player.color)
-	if moves is []:
-		current_player.has_lost = True
-		players[get_other_player_num(player_number)].has_won = True
+	moves = board.generateMoves(waiting_player.color)
+	if moves is [] or waiting_player.has_lost:
+		waiting_player.has_lost = True
+		# Making sure the other player is initialized
+		other_player_num = get_other_player_num(player_number)
+		other_player = players[other_player_num]
+		if other_player:
+			players[get_other_player_num(player_number)].has_won = True
+
+		player_count -= 1
 		return jsonify(
 			{
 				"status_code": 200,
@@ -111,7 +169,7 @@ def submit_board():
 	# We need to let wait_for_turn know to move on
 
 	arguments = request.get_json()
-	player_number = arguments["player"]
+	player_number = arguments["player_number"]
 	board.setBoard(clientToServer(arguments["board"]))
 
 	# Switching players

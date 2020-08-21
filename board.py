@@ -1,7 +1,6 @@
 class Board:
 	"""docstring for Board"""
-	def __init__(self, arg):
-		super(Board, self).__init__()
+	def __init__(self):
 		self.board = [
 	        ["blackRook", "blackKnight", "blackBishop", "blackQueen", "blackKing", "blackBishop", "blackKnight", "blackRook"],
 	        ["blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn"],
@@ -12,7 +11,7 @@ class Board:
 	        ["whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn"],
 	        ["whiteRook", "whiteKnight", "whiteBishop", "whiteQueen", "whiteKing", "whiteBishop", "whiteKnight", "whiteRook"]
 	    ]
-	
+
 	def setBoard(self, newBoard):
 		"""
 		Take a Board object and set the board

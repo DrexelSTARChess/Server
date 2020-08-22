@@ -110,10 +110,10 @@ class ChessPiece(ABC):
                         move = "x%d,%d" % (newi, newj)
                         if move not in possibleMoves:
                             possibleMoves.append(move)
-                        tl = False
+                        tr = False
                         pass
                     else:  # white piece or black king, stop infront of it
-                        tl = False
+                        tr = False
                         pass
 
         return possibleMoves

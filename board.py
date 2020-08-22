@@ -167,6 +167,9 @@ class Board:
                     moves = piece.getPossibleMoves(self.board)
                     # and then the magic, apply each move here to a new board
 
+                    # if piece.rep == "P":
+                    #     print(moves)
+
                     for move in moves:
                         # first create a new board, and copy pieces
                         newBoard = Board()
@@ -202,9 +205,9 @@ class Board:
                             newBoard.takePieceFast(i, j, takeX, takeY)
                         elif move.startswith("c"):
                             if "-" in move:
-                                legalMoves.append([0, 0, 0, 0])  # queen side castle
+                                legalMoves.append([-1, 0, 0, 0])  # queen side castle
                             else:
-                                legalMoves.append([1, 0, 0, 0])  # king side castle
+                                legalMoves.append([0, 0, 0, -1])  # king side castle
                         else:
                             parseMove= move.split(",")
                             takeX = int(parseMove[0])
@@ -214,8 +217,111 @@ class Board:
                         # now evaluate the board for check for playerColor
                         if not newBoard.isCheck(playerColor):
                             legalMoves.append([i, j, takeX, takeY])
+                        # else:
+                        #     print("ILLEGAL MOVE?:", piece.rep, "on", piece.getLoc(), move)
 
         return legalMoves
+
+    def generate_possible_moves(self, playerColor, move):
+        """Get move, apply move to board, return legal list of moves for the opposite player"""
+        for i in range(8):
+            for j in range(8):
+                if not self.isSquareEmpty(i, j) and self.board[i][j].rep == "P" and self.board[i][j].color == playerColor:  # turn off all your own enpassantable pieces now
+                    self.board[i][j].enpassant = False
+
+        # Apply move here according to rules
+        """if pawn is moving 2 spaces set enpassant bool to True and change not moved to False
+        check spefici en passant scenario if we are taking an en passant piece
+        if king move set canCastle to False
+        if rook move set canCastle to False
+        if already castled sst canCastle to False
+        """
+        fx = move[0]
+        fy = move[1]
+        tx = move[2]
+        ty = move[3]
+
+        if move == [-1, 0, 0, 0] or move == [0, 0, 0, -1]:  # if we are castling
+            if move == [0, 0, 0, -1]:  #king side castle
+                if playerColor == "white":
+                    self.board[7][4].canCastle = False
+                    self.board[7][7].canCastle = False
+                    self.board[7][0].canCastle = False
+                    self.movePieceFast(7, 4, 7, 5)
+                    self.movePieceFast(7, 7, 7, 4)
+
+                else:
+                    self.board[0][4].canCastle = False
+                    self.board[0][7].canCastle = False
+                    self.board[0][0].canCastle = False
+                    self.movePieceFast(0, 4, 0, 5)
+                    self.movePieceFast(0, 7, 0, 4)
+            else:  # queen side castle
+                if playerColor == "white":
+                    self.board[7][4].canCastle = False
+                    self.board[7][7].canCastle = False
+                    self.board[7][0].canCastle = False
+                    self.movePieceFast(7, 4, 7, 2)
+                    self.movePieceFast(7, 0, 7, 3)
+                else:
+                    self.board[0][4].canCastle = False
+                    self.board[0][7].canCastle = False
+                    self.board[0][0].canCastle = False
+                    self.movePieceFast(0, 4, 0, 2)
+                    self.movePieceFast(0, 0, 0, 3)
+
+        else:
+
+            pawnMovementFactor = 0
+            if playerColor == "white":
+                pawnMovementFactor = -1
+            else:
+                pawnMovementFactor = 1
+            piece = self.board[fx][fy]
+            if piece.rep == "K":
+                piece.canCastle = False
+            elif piece.rep == "R":
+                piece.canCastle = False
+            # first look at en passant i guess
+            if piece.rep == "P" and abs(fx-tx) == 2 and self.isSquareEmpty(tx, ty):
+                piece.enpassant = True  # make sure to check out pawn logic later
+                piece.notMoved = False
+                self.movePieceFast(fx, fy, tx, ty)
+            elif piece.rep == "P" and abs(fx-tx) == 1 and abs(fy-fy) == 1 and self.board[tx][ty-pawnMovementFactor].enpassant:  # really come back and check this too
+
+                self.movePieceFast(fx, fy, tx, ty)
+                self.board[fx][fy-pawnMovementFactor] = "noPiece"
+
+            elif not self.isSquareEmpty(tx, ty):
+
+                self.takePieceFast(fx, fy, tx, ty)
+            else:
+                self.movePieceFast(fx, fy, tx, ty)
+
+
+        enemyColor = ""
+        if playerColor == "white":
+            enemyColor = "black"
+        else:
+            enemyColor = "white"
+
+        enemyMoves = self.getLegalMoves(enemyColor)
+
+        return enemyMoves
+
+    def countPieces(self):
+        total_pieces = 0
+        for i in range(8):
+            for j in range(8):
+                if not b.isSquareEmpty(i, j):
+                    total_pieces += 1
+        return total_pieces
+
+    def getWinner(self):
+        """This function will return who won the game or if it was a draw"""
+        return True
+
+
 
 
 

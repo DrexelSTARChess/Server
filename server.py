@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 import time
 
 from board import Board
-from boardTranslator import clientToServer, serverToClient
+from boardTranslator import client_to_server, server_to_client
 from helper import player_num_to_color, get_other_player_num
 from player import Player
 
@@ -74,7 +74,7 @@ def quit_game():
 	return jsonify(
 		{
 			"status_code": 200,
-			"board_data": serverToClient(board),
+			"board_data": server_to_client(board),
 			"move_data": [],
 			"won": False,
 			"lost": True,
@@ -94,7 +94,7 @@ def wait_for_player():
 			return jsonify(
 				{
 					"status_code": 200,
-					"board_data": serverToClient(board),
+					"board_data": server_to_client(board),
 					"move_data": [],
 					"won": False,
 					"lost": True,
@@ -106,7 +106,7 @@ def wait_for_player():
 	return jsonify(
 				{
 					"status_code": 200,
-					"board_data": serverToClient(board),
+					"board_data": server_to_client(board),
 					"move_data": board.generateMoves(player_num_to_color[player_number])
 				}
 			)
@@ -130,7 +130,7 @@ def wait_for_turn():
 		return jsonify(
 			{
 				"status_code": 200,
-				"board_data": serverToClient(board),
+				"board_data": server_to_client(board),
 				"move_data": [],
 				"won": True,
 				"lost": False
@@ -151,7 +151,7 @@ def wait_for_turn():
 		return jsonify(
 			{
 				"status_code": 200,
-				"board_data": serverToClient(board),
+				"board_data": server_to_client(board),
 				"move_data": [],
 				"won": False,
 				"lost": True,
@@ -162,7 +162,7 @@ def wait_for_turn():
 	return jsonify(
 		{
 			"status_code": 200,
-			"board_data": serverToClient(board),
+			"board_data": server_to_client(board),
 			"move_data": moves,
 			"won": False,
 			"lost": False
@@ -178,7 +178,7 @@ def submit_board():
 
 	arguments = request.get_json()
 	player_number = arguments["player_number"]
-	board.setBoard(clientToServer(arguments["board"]))
+	board.setBoard(client_to_server(arguments["board"]))
 
 	# Switching players
 	players[player_number].is_turn = False

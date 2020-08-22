@@ -34,31 +34,24 @@ class Pawn(ChessPiece):
         if self.isBoundedSquare(self.i + (movementFactor * 2), self.j) and board[self.i + (movementFactor * 2)][self.j] == "noPiece" and self.notMoved:
             move = "%d,%d" % (self.i + (movementFactor*2), self.j)
             # print("triggered for", self.color)
-            self.notMoved = False
-            self.enpassant = True
             possibleMoves.append(move)
         if self.isBoundedSquare(self.i + movementFactor, self.j) and board[self.i + movementFactor][self.j] == "noPiece":
             move = "%d,%d" % (self.i + movementFactor, self.j)
-            self.notMoved = False
             possibleMoves.append(move)
         if self.isBoundedSquare(self.i + movementFactor, self.j - 1) and board[self.i + movementFactor][self.j - 1] != "noPiece" and board[self.i + movementFactor][self.j - 1].getColor() != self.color:
             move = "x%d,%d" % (self.i + movementFactor, self.j - 1)
-            self.notMoved = False
             possibleMoves.append(move)
         if self.isBoundedSquare(self.i + movementFactor, self.j + 1) and board[self.i + movementFactor][self.j + 1] != "noPiece" and board[self.i + movementFactor][self.j + 1].getColor() != self.color:
             move = "x%d,%d" % (self.i + movementFactor, self.j + 1)
-            self.notMoved = False
             possibleMoves.append(move)
         if self.isBoundedSquare(self.i + movementFactor, self.j - 1) and board[self.i + movementFactor][self.j - 1] == "noPiece" and board[self.i][self.j - 1] != "noPiece" and board[self.i][self.j - 1].color != self.color and board[self.i][self.j - 1].rep == "P" \
                 and board[self.i][self.j - 1].enpassant:
             move = "x%d,%d" % (self.i + movementFactor, self.j - 1)
-            self.notMoved = False
             possibleMoves.append(move)
             # print("ALETR")
         if self.isBoundedSquare(self.i + movementFactor, self.j + 1) and board[self.i + movementFactor][self.j + 1] == "noPiece" and board[self.i][self.j + 1] != "noPiece" and board[self.i][self.j + 1].color != self.color and board[self.i][self.j + 1].rep == "P" \
                 and board[self.i][self.j + 1].enpassant:
             move = "x%d,%d" % (self.i + movementFactor, self.j + 1)
-            self.notMoved = False
             possibleMoves.append(move)
             # print("ALETR2")
 

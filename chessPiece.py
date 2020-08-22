@@ -14,7 +14,7 @@ class ChessPiece(ABC):
         self.j = j
 
     def getPossibleMoves(self, board):
-        return [] # return a list of possible moves from a given board and location
+        return []  # return a list of possible moves from a given board and location
 
     def getColor(self):
         return self.color
@@ -49,7 +49,8 @@ class ChessPiece(ABC):
 
         for x in range(8):
             for y in range(8):
-                if tu and self.isBoundedSquare(self.i + x, self.j) and x != 0:  # check up
+                # check up
+                if tu and self.isBoundedSquare(self.i + x, self.j) and x != 0:
                     newi = self.i + x
                     newj = self.j
                     if board[newi][newj] == "noPiece":  # empty square
@@ -66,7 +67,8 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         tu = False
                         pass
-                if td and self.isBoundedSquare(self.i - x, self.j) and x != 0:  # check down
+                # check down
+                if td and self.isBoundedSquare(self.i - x, self.j) and x != 0:
                     newi = self.i - x
                     newj = self.j
                     if board[newi][newj] == "noPiece":  # empty square
@@ -83,7 +85,8 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         td = False
                         pass
-                if tl and self.isBoundedSquare(self.i, self.j + y) and y != 0:  # check left
+                # check left
+                if tl and self.isBoundedSquare(self.i, self.j + y) and y != 0:
                     newi = self.i
                     newj = self.j + y
                     if board[newi][newj] == "noPiece":  # empty square
@@ -99,7 +102,8 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         tl = False
                         pass
-                if tr and self.isBoundedSquare(self.i, self.j - y) and y != 0:  # check right
+                # check right
+                if tr and self.isBoundedSquare(self.i, self.j - y) and y != 0:
                     newi = self.i
                     newj = self.j - y
                     if board[newi][newj] == "noPiece":  # empty square
@@ -132,7 +136,8 @@ class ChessPiece(ABC):
 
         for x in range(8):
             for y in range(8):
-                if ul and self.isBoundedSquare(self.i + x, self.j + x) and x != 0:  # check up left
+                # check up left
+                if ul and self.isBoundedSquare(self.i + x, self.j + x) and x != 0:
                     newi = self.i + x
                     newj = self.j + x
                     if board[newi][newj] == "noPiece":  # empty square
@@ -148,7 +153,8 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         ul = False
                         pass
-                if ur and self.isBoundedSquare(self.i + x, self.j - x) and x != 0:  # check up right
+                # check up right
+                if ur and self.isBoundedSquare(self.i + x, self.j - x) and x != 0:
                     newi = self.i + x
                     newj = self.j - x
                     if board[newi][newj] == "noPiece":  # empty square
@@ -164,7 +170,8 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         ur = False
                         pass
-                if dl and self.isBoundedSquare(self.i - x, self.j + x) and x != 0:  # check down left
+                # check down left
+                if dl and self.isBoundedSquare(self.i - x, self.j + x) and x != 0:
                     newi = self.i - x
                     newj = self.j + x
                     if board[newi][newj] == "noPiece":  # empty square
@@ -180,7 +187,8 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         dl = False
                         pass
-                if dr and self.isBoundedSquare(self.i - x, self.j - x) and x != 0:  # check down right
+                # check down right
+                if dr and self.isBoundedSquare(self.i - x, self.j - x) and x != 0:
                     newi = self.i - x
                     newj = self.j - x
                     if board[newi][newj] == "noPiece":  # empty square
@@ -196,161 +204,5 @@ class ChessPiece(ABC):
                     else:  # white piece or black king, stop infront of it
                         dr = False
                         pass
-
-        return possibleMoves
-
-    def getKnightMoves(self, board):
-        possibleMoves = []
-        movei = self.i + 2
-        movej = self.j + 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i + 2
-        movej = self.j - 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 2
-        movej = self.j + 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 2
-        movej = self.j - 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        ### restart
-        movei = self.i + 1
-        movej = self.j + 2
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i + 1
-        movej = self.j - 2
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 1
-        movej = self.j + 2
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 1
-        movej = self.j - 2
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-
-        return possibleMoves
-
-    def getKingMoves(self, board):
-        possibleMoves = []
-        movei = self.i + 1
-        movej = self.j + 0
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 1
-        movej = self.j + 0
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i + 0
-        movej = self.j + 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i + 0
-        movej = self.j - 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-
-        movei = self.i + 1
-        movej = self.j + 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i + 1
-        movej = self.j - 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 1
-        movej = self.j + 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-        movei = self.i - 1
-        movej = self.j - 1
-        if self.isBoundedSquare(movei, movej):
-            if board[movei][movej] == "noPiece":
-                move = "%d,%d" % (movei, movej)
-                possibleMoves.append(move)
-            elif board[movei][movej].color != self.color:
-                move = "x%d,%d" % (movei, movej)
-                possibleMoves.append(move)
 
         return possibleMoves

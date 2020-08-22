@@ -64,7 +64,8 @@ Many endpoints are used by the client and server to communicate with one another
 ```
 {
     "player_number": Int (1 | 2),
-    "board": String[8][8]
+    "board": String[8][8],
+    "player_move": [4]
 }
 ```
 

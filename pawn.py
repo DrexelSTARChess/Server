@@ -14,6 +14,7 @@ class Pawn(ChessPiece):
         self.rep = "P"
         self.notMoved = True
         self.enpassant = False
+        self.name = "Pawn"
 
     def getPossibleMoves(self, board):
 

@@ -135,39 +135,42 @@ if __name__ == "__main__":
     #     print(piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
 
     ## big test
-    # color = "white"
-    # l = b.generate_possible_moves(color, [6, 4, 4, 4])
-    # movecount = 1
-    #
-    # while (len(l) != 0):
-    #     total_pieces = 0
-    #     for i in range(8):
-    #         for j in range(8):
-    #             if not b.isSquareEmpty(i, j):
-    #                 total_pieces += 1
-    #     print(total_pieces)
-    #     if total_pieces == 2:
-    #         break
-    #     move = random.choice(l)
-    #     fx = move[0]
-    #     fy = move[1]
-    #     tx = move[2]
-    #     ty = move[3]
-    #     piece = b.board[fx][fy]
-    #     if not b.isSquareEmpty(tx, ty):
-    #         epiece = b.board[tx][ty]
-    #         print(str(movecount)+".", piece.color + piece.rep, "at", "%d,%d" % (fx, fy), "attempting to take the", epiece.color+epiece.rep, "at %d,%d" % (tx, ty))
-    #     else:
-    #         print(str(movecount)+".", piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
-    #     if color == "white":
-    #         color = "black"
-    #     else:
-    #         color = "white"
-    #     l = b.generate_possible_moves(color, move)
-    #     b.printBoardWhite()
-    #     movecount += 1
-    #     # time.sleep(1)
-    # print(b.getWinner())
+    color = "white"
+    b.applyMove(color, [6, 4, 4, 4])
+    l = b.generate_possible_moves(color)
+
+    movecount = 1
+
+    while (len(l) != 0):
+        total_pieces = 0
+        for i in range(8):
+            for j in range(8):
+                if not b.isSquareEmpty(i, j):
+                    total_pieces += 1
+        print(total_pieces)
+        if total_pieces == 2:
+            break
+        move = random.choice(l)
+        fx = move[0]
+        fy = move[1]
+        tx = move[2]
+        ty = move[3]
+        piece = b.board[fx][fy]
+        if not b.isSquareEmpty(tx, ty):
+            epiece = b.board[tx][ty]
+            print(str(movecount)+".", piece.color + piece.rep, "at", "%d,%d" % (fx, fy), "attempting to take the", epiece.color+epiece.rep, "at %d,%d" % (tx, ty))
+        else:
+            print(str(movecount)+".", piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
+        if color == "white":
+            color = "black"
+        else:
+            color = "white"
+        b.applyMove(color, move)
+        l = b.generate_possible_moves(color)
+        b.printBoardWhite()
+        movecount += 1
+        # time.sleep(1)
+    print(b.getWinner())
 
 
 

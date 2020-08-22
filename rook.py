@@ -8,6 +8,7 @@ class Rook(ChessPiece):
         super(Rook, self).__init__(color, i, j)
         self.rep = "R"
         self.canCastle = True
+        self.name = "Rook"
 
     def getPossibleMoves(self, board):
         if self.i != 0 or self.i != 7 or self.j != 0 or self.j != 7:

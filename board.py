@@ -47,14 +47,6 @@ class Board:
             return True
         return False
 
-    def isGameOver(self):
-        """
-        Check if checkmate was achieved, i think we should provide a color here but i guess we dont have to
-        we need to iterate first in the board and look for the king, then see if in check, then check surrounding squares
-        :return: boolean representing if the game is over
-        """
-        return False
-
     def isCheck(self, playerColor):
         """
         search for the king of the form:
@@ -222,7 +214,7 @@ class Board:
 
         return legalMoves
 
-    def generate_possible_moves(self, playerColor, move):
+    def applyMove(self, playerColor, move):
         """Get move, apply move to board, return legal list of moves for the opposite player"""
         for i in range(8):
             for j in range(8):
@@ -299,15 +291,18 @@ class Board:
                 self.movePieceFast(fx, fy, tx, ty)
 
 
-        enemyColor = ""
-        if playerColor == "white":
-            enemyColor = "black"
-        else:
-            enemyColor = "white"
+        return True
 
-        enemyMoves = self.getLegalMoves(enemyColor)
+    def generate_possible_moves(self, playerColor):
+        # enemyColor = ""
+        # if playerColor == "white":
+        #     enemyColor = "black"
+        # else:
+        #     enemyColor = "white"
+        #
+        # enemyMoves = self.getLegalMoves(enemyColor) # used to return this
 
-        return enemyMoves
+        return self.getLegalMoves(playerColor)
 
     def countPieces(self):
         total_pieces = 0

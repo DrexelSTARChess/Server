@@ -7,6 +7,7 @@ class King(ChessPiece):
     def __init__(self, color, i, j):
         super(King, self).__init__(color, i, j)
         self.rep = "K"
+        self.name = "King"
         self.canCastle = True
 
     def getPossibleMoves(self, board):

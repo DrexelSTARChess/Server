@@ -7,6 +7,7 @@ class Bishop(ChessPiece):
     def __init__(self, color, i, j):
         super(Bishop, self).__init__(color, i, j)
         self.rep = "B"
+        self.name = "Bishop"
 
     def getPossibleMoves(self, board):
         return self.getDiagnals(board)

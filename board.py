@@ -313,13 +313,38 @@ class Board:
         total_pieces = 0
         for i in range(8):
             for j in range(8):
-                if not b.isSquareEmpty(i, j):
+                if not self.isSquareEmpty(i, j):
                     total_pieces += 1
         return total_pieces
 
     def getWinner(self):
         """This function will return who won the game or if it was a draw"""
-        return True
+        if self.countPieces() == 2:
+            return "draw from pieces"
+
+        # for i in range(8):
+        #     for j in range(8):
+        #         if not self.isSquareEmpty(i, j):
+        #             piece = self.board[i][j]
+        #             if piece.rep == "K":
+        #                 if piece.color == "white":
+        #                     wKing = piece
+        #                 else:
+        #                     bKing = piece
+
+        if len(self.getLegalMoves("white")) == 0:
+            if self.isCheck("white"):
+                return "black"
+            else:
+                return "white drawn position"
+        elif len(self.getLegalMoves("black")) == 0:
+            if self.isCheck("black"):
+                return "white"
+            else:
+                return "black drawn position"
+        else:
+            return "draw"  # shouldn't really get here
+
 
 
 

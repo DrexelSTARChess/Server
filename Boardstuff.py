@@ -83,6 +83,8 @@ if __name__ == "__main__":
     # b.movePieceFast(1, 4, 3, 4)
     # b.movePieceFast(6, 6, 4, 6)
     # b.movePieceFast(0, 3, 4, 7)
+    # # print(b.isCheck("white"))
+    # b.printBoardWhite()
 
     """Scholar's Mate (black mated)"""
     # b.movePieceFast(6, 4, 4, 4)
@@ -92,8 +94,8 @@ if __name__ == "__main__":
     # b.movePieceFast(7, 3, 3, 7)
     # b.movePieceFast(0, 6, 2, 5)
     # b.takePieceFast(3, 7, 1, 5)
-
     # b.printBoardWhite()
+
 
     # b.movePieceFast(0, 0, 5, 4)
 
@@ -108,12 +110,11 @@ if __name__ == "__main__":
     # b.printBoardWhite()
 
     """En Passant test Come back to this"""
-    # b.movePieceFast(1, 5, 4, 5)
-    # b.movePieceFast(6, 6, 4, 6)
-    # print(b.board[4][5].color)
-    # print(b.board[4][6].color)
-    # b.board[4][6].enpassant = True
-    # print(b.board[4][5].getPossibleMoves(b.board))
+    # b.movePieceFast(1, 5, 3, 5)
+    # b.movePieceFast(6, 6, 3, 6)
+    # b.board[3][5].enpassant = True
+    # print(b.board[3][6].getPossibleMoves(b.board))
+    # b.printBoardWhite()
 
 
 
@@ -134,39 +135,39 @@ if __name__ == "__main__":
     #     print(piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
 
     ## big test
-    color = "white"
-    l = b.generate_possible_moves(color, [6, 4, 4, 4])
-    movecount = 1
-
-    while (len(l) != 0):
-        total_pieces = 0
-        for i in range(8):
-            for j in range(8):
-                if not b.isSquareEmpty(i, j):
-                    total_pieces += 1
-        print(total_pieces)
-        if total_pieces == 2:
-            break
-        move = random.choice(l)
-        fx = move[0]
-        fy = move[1]
-        tx = move[2]
-        ty = move[3]
-        piece = b.board[fx][fy]
-        if not b.isSquareEmpty(tx, ty):
-            epiece = b.board[tx][ty]
-            print(str(movecount)+".", piece.color + piece.rep, "at", "%d,%d" % (fx, fy), "attempting to take the", epiece.color+epiece.rep, "at %d,%d" % (tx, ty))
-        else:
-            print(str(movecount)+".", piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
-        if color == "white":
-            color = "black"
-        else:
-            color = "white"
-        l = b.generate_possible_moves(color, move)
-        b.printBoardWhite()
-        movecount += 1
-        # time.sleep(1)
-    print("GameOver!")
+    # color = "white"
+    # l = b.generate_possible_moves(color, [6, 4, 4, 4])
+    # movecount = 1
+    #
+    # while (len(l) != 0):
+    #     total_pieces = 0
+    #     for i in range(8):
+    #         for j in range(8):
+    #             if not b.isSquareEmpty(i, j):
+    #                 total_pieces += 1
+    #     print(total_pieces)
+    #     if total_pieces == 2:
+    #         break
+    #     move = random.choice(l)
+    #     fx = move[0]
+    #     fy = move[1]
+    #     tx = move[2]
+    #     ty = move[3]
+    #     piece = b.board[fx][fy]
+    #     if not b.isSquareEmpty(tx, ty):
+    #         epiece = b.board[tx][ty]
+    #         print(str(movecount)+".", piece.color + piece.rep, "at", "%d,%d" % (fx, fy), "attempting to take the", epiece.color+epiece.rep, "at %d,%d" % (tx, ty))
+    #     else:
+    #         print(str(movecount)+".", piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
+    #     if color == "white":
+    #         color = "black"
+    #     else:
+    #         color = "white"
+    #     l = b.generate_possible_moves(color, move)
+    #     b.printBoardWhite()
+    #     movecount += 1
+    #     # time.sleep(1)
+    # print(b.getWinner())
 
 
 

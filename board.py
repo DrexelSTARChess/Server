@@ -47,4 +47,3 @@ class Board:
 	
 	def generateMoves(self, playerColor):
 		return []
-

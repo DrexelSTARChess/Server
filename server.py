@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 import time
 
 from board import Board
-from boardTranslator import client_to_server, server_to_client
+from boardTranslator import server_to_client
 from helper import player_num_to_color, get_other_player_num
 from player import Player
 
@@ -107,7 +107,7 @@ def wait_for_player():
 				{
 					"status_code": 200,
 					"board_data": server_to_client(board),
-					"move_data": board.generateMoves(player_num_to_color[player_number])
+					"move_data": board.getLegalMoves(player_num_to_color[player_number])
 				}
 			)
 
@@ -138,7 +138,7 @@ def wait_for_turn():
 		)
 
 	# If game is over, then this player has lost
-	moves = board.generateMoves(waiting_player.color)
+	moves = board.getLegalMoves(waiting_player.color)
 	if moves is [] or waiting_player.has_lost:
 		waiting_player.has_lost = True
 		# Making sure the other player is initialized
@@ -178,7 +178,8 @@ def submit_board():
 
 	arguments = request.get_json()
 	player_number = arguments["player_number"]
-	board.setBoard(client_to_server(arguments["board"]))
+	player_move = arguments["player_move"]
+	board.applyMove(players[player_number].color, player_move)
 
 	# Switching players
 	players[player_number].is_turn = False

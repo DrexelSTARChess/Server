@@ -106,14 +106,54 @@ if __name__ == "__main__":
     # b.movePieceFast(7, 2, 5, 2)
     # b.movePieceFast(7, 1, 5, 1)
     # # b.generate_possible_moves("white", [0, 0, 0, 0])
-    # print(b.board[7][7].getPossibleMoves(b.board))  #BUG FOUND HERE, SOLVED
+    # print(b.board[7][4].getPossibleMoves(b.board))  #BUG FOUND HERE, SOLVED
+    # b.applyMove("white", [0, 0, 0, -1])
+    # b.printBoardWhite()
+
+    # b.movePieceFast(0, 5, 2, 5)
+    # b.movePieceFast(0, 6, 2, 6)
+    # b.movePieceFast(0, 3, 2, 3)
+    # b.movePieceFast(0, 2, 2, 2)
+    # b.movePieceFast(0, 1, 2, 1)
+    # print(b.board[0][4].getPossibleMoves(b.board))  # BUG FOUND HERE, SOLVED
+    # b.applyMove("black", [0, 0, 0, -1])
     # b.printBoardWhite()
 
     """En Passant test Come back to this"""
     # b.movePieceFast(1, 5, 3, 5)
     # b.movePieceFast(6, 6, 3, 6)
+    # b.printBoardWhite()
     # b.board[3][5].enpassant = True
+    # print(b.board[3][6].getLoc())
     # print(b.board[3][6].getPossibleMoves(b.board))
+    # print(b.getLegalMoves("white"))
+    # b.applyMove("white", [3, 6, 2, 5])
+
+    # b.movePieceFast(1, 5, 4, 5)
+    # b.movePieceFast(6, 6, 4, 6)
+    # b.board[4][6].enpassant = True
+    # b.printBoardWhite()
+    # print(b.board[4][5].getPossibleMoves(b.board))
+    # print(b.getLegalMoves("black"))
+    # b.applyMove("black", [4, 5, 5, 6])
+    # b.printBoardWhite()
+
+    # b.movePieceFast(1, 6, 4, 6)
+    # b.movePieceFast(6, 7, 4, 7)
+    # b.board[4][7].enpassant = True
+    # b.printBoardWhite()
+    # print(b.board[4][6].getPossibleMoves(b.board))
+    # print(b.getLegalMoves("black"))
+    # b.applyMove("black", [4, 6, 5, 7])
+    # b.printBoardWhite()
+
+
+    """Pawn Promotion test"""
+    # b.movePieceFast(1, 5, 2, 6)
+    # b.movePieceFast(0, 5, 2, 4)
+    # b.movePieceFast(6, 5, 0, 5)
+    # b.applyMove("white", [40, 40, 40, 40])
+    # print(b.board[0][5].getPossibleMoves(b.board))
     # b.printBoardWhite()
 
 
@@ -134,10 +174,10 @@ if __name__ == "__main__":
     #     piece = b.board[fx][fy]
     #     print(piece.color + piece.rep,"at", "%d,%d" % (fx, fy),"attempting to move to", "%d,%d" % (tx, ty))
 
-    ## big test
+    # big test
     color = "white"
     b.applyMove(color, [6, 4, 4, 4])
-    l = b.generate_possible_moves(color)
+    l = b.getLegalMoves(color)
 
     movecount = 1
 

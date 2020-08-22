@@ -89,6 +89,9 @@ class Board:
 
         return []
 
+    def isBoundedSquare(self, x, y):
+        return 0 <= x <= 7 and 0 <= y <= 7
+
     def printBoardWhite(self):
         """testing, just print board"""
         print("-"*35)
@@ -215,7 +218,7 @@ class Board:
         return legalMoves
 
     def applyMove(self, playerColor, move):
-        """Get move, apply move to board, return legal list of moves for the opposite player"""
+        """Get move, apply move to board, Think about applying pawn promotion in this method"""
         for i in range(8):
             for j in range(8):
                 if not self.isSquareEmpty(i, j) and self.board[i][j].rep == "P" and self.board[i][j].color == playerColor:  # turn off all your own enpassantable pieces now
@@ -239,15 +242,15 @@ class Board:
                     self.board[7][4].canCastle = False
                     self.board[7][7].canCastle = False
                     self.board[7][0].canCastle = False
-                    self.movePieceFast(7, 4, 7, 5)
-                    self.movePieceFast(7, 7, 7, 4)
+                    self.movePieceFast(7, 4, 7, 6)
+                    self.movePieceFast(7, 7, 7, 5)
 
                 else:
                     self.board[0][4].canCastle = False
                     self.board[0][7].canCastle = False
                     self.board[0][0].canCastle = False
-                    self.movePieceFast(0, 4, 0, 5)
-                    self.movePieceFast(0, 7, 0, 4)
+                    self.movePieceFast(0, 4, 0, 6)
+                    self.movePieceFast(0, 7, 0, 5)
             else:  # queen side castle
                 if playerColor == "white":
                     self.board[7][4].canCastle = False
@@ -261,7 +264,28 @@ class Board:
                     self.board[0][0].canCastle = False
                     self.movePieceFast(0, 4, 0, 2)
                     self.movePieceFast(0, 0, 0, 3)
-
+        elif sum(move) >= 40:  # short hand for types of promotions
+            for j in range(8):
+                if not self.isSquareEmpty(0, j) and self.board[0][j].rep == "P":
+                    if move == [10, 10, 10, 10]:
+                        self.board[0][j] = Knight(playerColor, 0, j)
+                    elif move == [20, 20, 20, 20]:
+                        self.board[0][j] = Bishop(playerColor, 0, j)
+                    elif move == [30, 30, 30, 30]:
+                        self.board[0][j] = Rook(playerColor, 0, j)
+                        self.board[0][j].canCastle = False
+                    else:
+                        self.board[0][j] = Queen(playerColor, 0, j)
+                elif not self.isSquareEmpty(7, j) and self.board[7][j].rep == "P":
+                    if move == [10, 10, 10, 10]:
+                        self.board[7][j] = Knight(playerColor, 0, j)
+                    elif move == [20, 20, 20, 20]:
+                        self.board[7][j] = Bishop(playerColor, 0, j)
+                    elif move == [30, 30, 30, 30]:
+                        self.board[7][j] = Rook(playerColor, 0, j)
+                        self.board[7][j].canCastle = False
+                    else:
+                        self.board[7][j] = Queen(playerColor, 0, j)
         else:
 
             pawnMovementFactor = 0
@@ -279,10 +303,14 @@ class Board:
                 piece.enpassant = True  # make sure to check out pawn logic later
                 piece.notMoved = False
                 self.movePieceFast(fx, fy, tx, ty)
-            elif piece.rep == "P" and abs(fx-tx) == 1 and abs(fy-fy) == 1 and self.board[tx][ty-pawnMovementFactor].enpassant:  # really come back and check this too
-
+            elif piece.rep == "P" and self.isSquareEmpty(tx, ty) and self.isBoundedSquare(fx, fy-1) and not self.isSquareEmpty(fx, fy-1) and self.board[fx][fy-1].rep == "P" and self.board[fx][fy-1].enpassant:  # really come back and check this too
+                # print("SHOULD FIRE")
                 self.movePieceFast(fx, fy, tx, ty)
-                self.board[fx][fy-pawnMovementFactor] = "noPiece"
+                self.board[fx][fy-1] = "noPiece"
+            elif piece.rep == "P" and self.isSquareEmpty(tx, ty) and self.isBoundedSquare(fx, fy+1) and not self.isSquareEmpty(fx, fy+1) and self.board[fx][fy+1].rep == "P" and self.board[fx][fy+1].enpassant:  # really come back and check this too
+                # print("SHOULD FIRE")
+                self.movePieceFast(fx, fy, tx, ty)
+                self.board[fx][fy+1] = "noPiece"
 
             elif not self.isSquareEmpty(tx, ty):
 

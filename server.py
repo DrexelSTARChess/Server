@@ -189,5 +189,6 @@ def submit_board():
 	return jsonify(
 				{
 					"status_code": 200,
+					"board_data": server_to_client(board)
 				}
 			)

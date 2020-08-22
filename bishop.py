@@ -1,9 +1,13 @@
 from chessPiece import ChessPiece
 
+
 class Bishop(ChessPiece):
-	"""docstring for Bishop"""
-	def __init__(self, color, x, y):
-		super(Bishop, self).__init__(color, x, y)
-	
-	def getPossibleMoves(self, board):
-		return [][]
+    """docstring for Bishop"""
+
+    def __init__(self, color, i, j):
+        super(Bishop, self).__init__(color, i, j)
+        self.rep = "B"
+        self.name = "Bishop"
+
+    def getPossibleMoves(self, board):
+        return self.getDiagnals(board)

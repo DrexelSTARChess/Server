@@ -169,7 +169,6 @@ def wait_for_turn():
 		}
 	)
 
-
 @app.route('/submitBoard', methods=['GET', 'POST'])
 @cross_origin()
 def submit_board():

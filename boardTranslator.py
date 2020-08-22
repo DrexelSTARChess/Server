@@ -45,13 +45,13 @@ def client_to_server(board):
     return result
 
 
-def server_to_client(boardObj):
+def server_to_client(board_obj):
     """
     Translates server format of board to client format
     board: A 2D array of chess piece objects representing the board
     Returns: A 2D array of strings representing the board
     """
-    board = boardObj.board
+    board = board_obj.board
     result = [["noPiece" for i in range(8)] for j in range(8)]
     for row_num in range(0, len(board)):
         for column_num in range(0, len(board[row_num])):
@@ -94,6 +94,8 @@ if __name__ == "__main__":
 	    ]
 
     client_to_server_board = client_to_server(client_board)
-    server_to_client_board = server_to_client(client_to_server_board)
+    test_board_obj = Board()
+    test_board_obj.setBoard(client_to_server_board)
+    server_to_client_board = server_to_client(test_board_obj)
 
     print("Do translations function correctly:", client_board == server_to_client_board)

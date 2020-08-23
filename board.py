@@ -389,17 +389,17 @@ class Board:
                 self.move_piece_fast(0, 4, 0, 6)
                 self.move_piece_fast(0, 7, 0, 5)
         elif move == [7, 4, 7, 2]:  # white queenside castle
-                    self.board[7][4].can_castle = False
-                    self.board[7][7].can_castle = False
-                    self.board[7][0].can_castle = False
-                    self.move_piece_fast(7, 4, 7, 2)
-                    self.move_piece_fast(7, 0, 7, 3)
+                self.board[7][4].can_castle = False
+                self.board[7][7].can_castle = False
+                self.board[7][0].can_castle = False
+                self.move_piece_fast(7, 4, 7, 2)
+                self.move_piece_fast(7, 0, 7, 3)
         elif move == [0, 4, 0, 2]:  # black queenside castle
-                    self.board[0][4].can_castle = False
-                    self.board[0][7].can_castle = False
-                    self.board[0][0].can_castle = False
-                    self.move_piece_fast(0, 4, 0, 2)
-                    self.move_piece_fast(0, 0, 0, 3)
+                self.board[0][4].can_castle = False
+                self.board[0][7].can_castle = False
+                self.board[0][0].can_castle = False
+                self.move_piece_fast(0, 4, 0, 2)
+                self.move_piece_fast(0, 0, 0, 3)
         elif sum(move) >= 20:  # short hand for types of promotions
             if not self.is_square_empty(1, move[1]) and\
                     self.board[1][move[1]].rep == "P" and \

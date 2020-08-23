@@ -8,7 +8,7 @@ class King(ChessPiece):
         super(King, self).__init__(color, i, j)
         self.rep = "K"
         self.name = "King"
-        self.canCastle = True
+        self.can_castle = True
 
     def get_possible_moves(self, board):
         return self.get_king_moves(board) + self.castle(board)
@@ -17,7 +17,7 @@ class King(ChessPiece):
 
         castle_moves = []
         if self.color == "white":
-            if self.canCastle and\
+            if self.can_castle and\
                     board[self.i][self.j + 1] == "noPiece" and\
                     board[self.i][self.j + 2] == "noPiece" and\
                     board[self.i][self.j + 3] != "noPiece" and\
@@ -25,7 +25,7 @@ class King(ChessPiece):
                     board[self.i][self.j + 3].can_castle:
                 move = "c%d,%d" % (10, 10)
                 castle_moves.append(move)
-            if self.canCastle and\
+            if self.can_castle and\
                     board[self.i][self.j - 1] == "noPiece" and\
                     board[self.i][self.j - 2] == "noPiece" and\
                     board[self.i][self.j - 3] == "noPiece" and\
@@ -35,7 +35,7 @@ class King(ChessPiece):
                 move = "c%d,%d" % (10, -10)
                 castle_moves.append(move)
         else:
-            if self.canCastle and\
+            if self.can_castle and\
                     board[self.i][self.j + 1] == "noPiece" and\
                     board[self.i][self.j + 2] == "noPiece" and\
                     board[self.i][self.j + 3] != "noPiece" and\
@@ -43,7 +43,7 @@ class King(ChessPiece):
                     board[self.i][self.j + 3].can_castle:
                 move = "c%d,%d" % (10, 10)
                 castle_moves.append(move)
-            if self.canCastle and\
+            if self.can_castle and\
                     board[self.i][self.j - 1] == "noPiece" and\
                     board[self.i][self.j - 2] == "noPiece" and\
                     board[self.i][self.j - 3] == "noPiece" and\

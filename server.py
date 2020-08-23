@@ -114,7 +114,7 @@ def wait_for_player():
                 {
                     "status_code": 200,
                     "board_data": server_to_client(board),
-                    "move_data": board.getLegalMoves(
+                    "move_data": board.get_legal_moves(
                         player_num_to_color[player_number]
                     ),
                     "won": False,
@@ -149,15 +149,15 @@ def wait_for_turn():
                 "won": True,
                 "lost": False,
                 "draw": False,
-                "is_check": board.isCheck(players[player_number].color)
+                "is_check": board.is_check(players[player_number].color)
             }
         )
 
     # If game is over, then this player has lost; If draw then neither wins
-    moves = board.getLegalMoves(waiting_player.color)
+    moves = board.get_legal_moves(waiting_player.color)
     if moves is [] or waiting_player.has_lost:
         is_draw = False
-        if board.getWinner() == "draw":
+        if board.get_winner() == "draw":
             is_draw = True
         else:
             waiting_player.has_lost = True
@@ -176,7 +176,7 @@ def wait_for_turn():
                 "won": False,
                 "lost": waiting_player.has_lost,
                 "draw": is_draw,
-                "is_check": board.isCheck(players[player_number].color)
+                "is_check": board.is_check(players[player_number].color)
             }
         )
 
@@ -189,7 +189,7 @@ def wait_for_turn():
             "won": False,
             "lost": False,
             "draw": False,
-            "is_check": board.isCheck(players[player_number].color)
+            "is_check": board.is_check(players[player_number].color)
         }
     )
 
@@ -203,7 +203,7 @@ def submit_board():
     arguments = request.get_json()
     player_number = arguments["player_number"]
     player_move = arguments["player_move"]
-    board.applyMove(players[player_number].color, player_move)
+    board.apply_move(players[player_number].color, player_move)
 
     # Switching players
     players[player_number].is_turn = False
@@ -211,8 +211,8 @@ def submit_board():
     players[other_player_number].is_turn = True
 
     return jsonify(
-                {
-                    "status_code": 200,
-                    "board_data": server_to_client(board)
-                }
-            )
+        {
+            "status_code": 200,
+            "board_data": server_to_client(board)
+        }
+    )

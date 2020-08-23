@@ -9,9 +9,11 @@ class Rook(ChessPiece):
         self.rep = "R"
         self.can_castle = True
         self.name = "Rook"
+        self.oi = i
+        self.oj = j
 
     def get_possible_moves(self, board):
-        if self.i != 0 or self.i != 7 or self.j != 0 or self.j != 7:
+        if self.i != self.i or self.j != self.oj:
             self.can_castle = False
 
         return self.get_cardinals(board)

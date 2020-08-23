@@ -179,6 +179,16 @@ if __name__ == "__main__":
     # b.apply_move("white", [7, 4, 7, 6])
     # b.print_board_white()
 
+    """Promotion test"""
+    # b.move_piece_fast(0, 7, 5, 5)
+    # b.move_piece_fast(1, 7, 5, 6)
+    # b.move_piece_fast(6, 7, 1, 7)
+    # b.print_board_white()
+    # b.apply_move("white", [1, 7, 0, 6])
+    # b.pawn_promotion("Queen", [0, 6])
+    # b.print_board_white()
+    # print(b.get_legal_moves("white"))
+
 
 
     # print("Is the king in check?", b.isCheck("white"))

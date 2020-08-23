@@ -203,7 +203,12 @@ def submit_board():
     arguments = request.get_json()
     player_number = arguments["player_number"]
     player_move = arguments["player_move"]
+    pawn_promotion_piece = arguments["pawn_promotion"]
+    
+    # Applying player move
     board.apply_move(players[player_number].color, player_move)
+    if not (pawn_promotion_piece == ""):
+        board.pawn_promotion(pawn_promotion_piece, player_move[2:])
 
     # Switching players
     players[player_number].is_turn = False

@@ -346,6 +346,26 @@ class Board:
 
         return legal_moves
 
+    def pawn_promotion(self, piece_type, loc):
+        pawn_color = ""
+        # get color
+        if not self.is_square_empty(loc[0], loc[1]) and self.board[loc[0]][loc[1]].rep == "P":
+            pawn_color = self.board[loc[0]][loc[1]].color
+        else:
+            return
+        # promote
+        if piece_type == "knight":
+            self.board[loc[0]][loc[1]] = Knight(pawn_color, loc[0], loc[1])
+        elif piece_type == "bishop":
+            self.board[loc[0]][loc[1]] = Bishop(pawn_color, loc[0], loc[1])
+        elif piece_type == "rook":
+            self.board[loc[0]][loc[1]] = Rook(pawn_color, loc[0], loc[1])
+            self.board[loc[0]][loc[1]].can_castle = False
+        elif piece_type == "Queen":
+            self.board[loc[0]][loc[1]] = Queen(pawn_color, loc[0], loc[1])
+        else:
+            return
+
     def apply_move(self, player_color, move):
         """
         Get move, apply move to board,
@@ -399,39 +419,6 @@ class Board:
                     self.board[0][0].can_castle = False
                     self.move_piece_fast(0, 4, 0, 2)
                     self.move_piece_fast(0, 0, 0, 3)
-        elif sum(move) >= 40:  # short hand for types of promotions
-            if not self.is_square_empty(1, move[1]) and\
-                    self.board[1][move[1]].rep == "P" and \
-                    self.board[1][move[1]].color == "white":
-                if move[2:] == [20, 20]:
-                    self.board[0][move[1]] = Knight(player_color, 0, move[1])
-                    self.board[1][move[1]] = "noPiece"
-                elif move[2:] == [30, 30]:
-                    self.board[0][move[1]] = Bishop(player_color, 0, move[1])
-                    self.board[1][move[1]] = "noPiece"
-                elif move[2:] == [40, 40]:
-                    self.board[0][move[1]] = Rook(player_color, 0, move[1])
-                    self.board[0][move[1]].can_castle = False
-                    self.board[1][move[1]] = "noPiece"
-                else:
-                    self.board[0][move[1]] = Queen(player_color, 0, move[1])
-                    self.board[1][move[1]] = "noPiece"
-            elif not self.is_square_empty(6, move[1]) and\
-                    self.board[7][move[1]].rep == "P" and \
-                    self.board[1][move[1]].color == "black":
-                if move[2:] == [20, 20]:
-                    self.board[7][move[1]] = Knight(player_color, 7, move[1])
-                    self.board[6][move[1]] = "noPiece"
-                elif move[2:] == [30, 30]:
-                    self.board[7][move[1]] = Bishop(player_color, 7, move[1])
-                    self.board[6][move[1]] = "noPiece"
-                elif move[2:] == [40, 40]:
-                    self.board[7][move[1]] = Rook(player_color, 7, move[1])
-                    self.board[7][move[1]].can_castle = False
-                    self.board[6][move[1]] = "noPiece"
-                else:
-                    self.board[7][move[1]] = Queen(player_color, 7, move[1])
-                    self.board[6][move[1]] = "noPiece"
         else:
             piece = self.board[fx][fy]
             if piece.rep == "K":

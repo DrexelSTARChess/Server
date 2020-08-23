@@ -65,7 +65,8 @@ Many endpoints are used by the client and server to communicate with one another
 {
     "player_number": Int (1 | 2),
     "board": String[8][8],
-    "player_move": [4]
+    "player_move": [4],
+    "pawn_promotion": String
 }
 ```
 
@@ -119,7 +120,10 @@ Or if game could not be started because server is full:
 `submitBoard`:
 
 ```
-{ "status_code": 200 }
+{
+    "status_code": 200,
+    "board_data": String[8][8]
+}
 ```
 
 <hr>

@@ -107,7 +107,9 @@ def wait_for_player():
 				{
 					"status_code": 200,
 					"board_data": server_to_client(board),
-					"move_data": board.getLegalMoves(player_num_to_color[player_number])
+					"move_data": board.getLegalMoves(player_num_to_color[player_number]),
+                                        "won": False,
+                                        "lost": False
 				}
 			)
 

@@ -298,7 +298,6 @@ class Board:
                                 if "-" in move:
                                     # queen side castle
                                     # check every location of the king in castle move
-
                                     new_board.move_piece_fast(7, 4, 7, 3)
                                     if new_board.is_check(player_color):
                                         continue

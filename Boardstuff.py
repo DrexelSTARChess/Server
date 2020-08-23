@@ -167,6 +167,18 @@ if __name__ == "__main__":
     # print(len(b.getLegalMoves("white")))
     # print(len(b.getLegalMoves("black")))
 
+    """Castling test"""
+    # b.move_piece_fast(7, 5, 5, 5)
+    # b.move_piece_fast(7, 6, 5, 6)
+    # b.move_piece_fast(7, 3, 5, 3)
+    # b.move_piece_fast(7, 2, 5, 2)
+    # b.move_piece_fast(7, 1, 5, 1)
+    # b.print_board_white()
+    # # print(b.board[7][4].get_possible_moves(b.board))
+    # print(b.get_legal_moves("white"))
+    # b.apply_move("white", [7, 4, 7, 6])
+    # b.print_board_white()
+
 
 
     # print("Is the king in check?", b.isCheck("white"))

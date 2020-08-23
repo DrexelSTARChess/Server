@@ -349,17 +349,19 @@ class Board:
     def pawn_promotion(self, piece_type, loc):
         # get color
         if not self.is_square_empty(loc[0], loc[1]) and self.board[loc[0]][loc[1]].rep == "P":
-            player_color = self.board[loc[0]][loc[1]].color
+            pawn_color = self.board[loc[0]][loc[1]].color
+        else:
+            return
         # promote
         if piece_type == "knight":
-            self.board[loc[0]][loc[1]] = Knight(player_color, loc[0], loc[1])
+            self.board[loc[0]][loc[1]] = Knight(pawn_color, loc[0], loc[1])
         elif piece_type == "bishop":
-            self.board[loc[0]][loc[1]] = Bishop(player_color, loc[0], loc[1])
+            self.board[loc[0]][loc[1]] = Bishop(pawn_color, loc[0], loc[1])
         elif piece_type == "rook":
-            self.board[loc[0]][loc[1]] = Rook(player_color, loc[0], loc[1])
+            self.board[loc[0]][loc[1]] = Rook(pawn_color, loc[0], loc[1])
             self.board[loc[0]][loc[1]].can_castle = False
         elif piece_type == "Queen":
-            self.board[loc[0]][loc[1]] = Queen(player_color, loc[0], loc[1])
+            self.board[loc[0]][loc[1]] = Queen(pawn_color, loc[0], loc[1])
         else:
             return
 

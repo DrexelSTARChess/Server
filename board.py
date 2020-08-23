@@ -278,14 +278,14 @@ class Board:
                         self.board[0][j] = Queen(playerColor, 0, j)
                 elif not self.isSquareEmpty(7, j) and self.board[7][j].rep == "P":
                     if move == [10, 10, 10, 10]:
-                        self.board[7][j] = Knight(playerColor, 0, j)
+                        self.board[7][j] = Knight(playerColor, 7, j)
                     elif move == [20, 20, 20, 20]:
-                        self.board[7][j] = Bishop(playerColor, 0, j)
+                        self.board[7][j] = Bishop(playerColor, 7, j)
                     elif move == [30, 30, 30, 30]:
-                        self.board[7][j] = Rook(playerColor, 0, j)
+                        self.board[7][j] = Rook(playerColor, 7, j)
                         self.board[7][j].canCastle = False
                     else:
-                        self.board[7][j] = Queen(playerColor, 0, j)
+                        self.board[7][j] = Queen(playerColor, 7, j)
         else:
 
             pawnMovementFactor = 0

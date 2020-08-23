@@ -60,7 +60,7 @@ def server_to_client(board_obj):
                 continue
 
             piece_type = type(board[row_num][column_num])
-            piece_string = board[row_num][column_num].getColor()
+            piece_string = board[row_num][column_num].get_color()
 
             # Create a string representation of each piece
             if piece_type is Rook:

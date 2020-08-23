@@ -70,7 +70,7 @@ class Board:
         for i in range(8):
             for j in range(8):
                 if not self.isSquareEmpty(i, j) and self.board[i][j].color != playerColor:
-                    allmoves += self.board[i][j].getPossibleMoves(self.board)
+                    allmoves += self.board[i][j].get_possible_moves(self.board)
         kings = "x%d,%d" % (ki, kj)
         if kings in allmoves:
             return True
@@ -99,7 +99,7 @@ class Board:
             for j in range(8):
                 sq = self.board[i][j]
                 if sq != "noPiece":
-                    print(" " + self.board[i][j].getPieceRep(), end=" ")
+                    print(" " + self.board[i][j].get_piece_rep(), end=" ")
                 else:
                     print(" //", end=" ")
             print()
@@ -111,7 +111,7 @@ class Board:
             for j in range(7, -1, -1):
                 sq = self.board[i][j]
                 if sq != "noPiece":
-                    print(" " + self.board[i][j].getPieceRep(), end=" ")
+                    print(" " + self.board[i][j].get_piece_rep(), end=" ")
                 else:
                     print(" //", end=" ")
             print()
@@ -120,9 +120,9 @@ class Board:
     def movePieceFast(self, x1, y1, x2, y2):
         # move piece internal location
         if self.board[x1][y1] != "noPiece":
-            self.board[x1][y1].setLoc(x2, y2)
+            self.board[x1][y1].set_loc(x2, y2)
         if self.board[x2][y2] != "noPiece":
-            self.board[x2][y2].setLoc(x1, y1)
+            self.board[x2][y2].set_loc(x1, y1)
         # move piece on board
         self.board[x1][y1], self.board[x2][y2] = self.board[x2][y2], self.board[x1][y1]
 
@@ -131,7 +131,7 @@ class Board:
 
         #change first piece location
         if self.board[x1][y1] != "noPiece":
-            self.board[x1][y1].setLoc(x2, y2)
+            self.board[x1][y1].set_loc(x2, y2)
 
         #move piece on board
         self.board[x2][y2] = self.board[x1][y1]
@@ -159,7 +159,7 @@ class Board:
                 if not self.isSquareEmpty(i, j) and self.board[i][j].color == playerColor:  # for every piece...
                     # get the moveset of the piece...
                     piece = self.board[i][j]
-                    moves = piece.getPossibleMoves(self.board)
+                    moves = piece.get_possible_moves(self.board)
                     # and then the magic, apply each move here to a new board
 
                     # if piece.rep == "P":

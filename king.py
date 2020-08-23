@@ -10,7 +10,7 @@ class King(ChessPiece):
         self.name = "King"
         self.canCastle = True
 
-    def getPossibleMoves(self, board):
+    def get_possible_moves(self, board):
         return self.getKingMoves(board) + self.castle(board)
 
     def castle(self, board):

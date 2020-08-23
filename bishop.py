@@ -9,5 +9,5 @@ class Bishop(ChessPiece):
         self.rep = "B"
         self.name = "Bishop"
 
-    def getPossibleMoves(self, board):
+    def get_possible_moves(self, board):
         return self.getDiagnals(board)

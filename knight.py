@@ -9,5 +9,5 @@ class Knight(ChessPiece):
         self.rep = "N"
         self.name = "Knight"
 
-    def getPossibleMoves(self, board):
+    def get_possible_moves(self, board):
         return self.getKnightMoves(board)

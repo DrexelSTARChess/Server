@@ -1,7 +1,6 @@
-from flask import Flask
 from unittest import TestCase
-
 from server import app, restart_vars
+
 
 class TestIntegrations(TestCase):
     def setUp(self):
@@ -28,15 +27,23 @@ class TestIntegrations(TestCase):
             "player_move": [6, 0, 5, 0],
         })
         assert response.json["status_code"] == 200
-        expected_board =  [
-            ['blackRook', 'blackKnight', 'blackBishop', 'blackQueen', 'blackKing', 'blackBishop', 'blackKnight', 'blackRook'],
-            ['blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['whitePawn', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['noPiece', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn'],
-            ['whiteRook', 'whiteKnight', 'whiteBishop', 'whiteQueen', 'whiteKing', 'whiteBishop', 'whiteKnight', 'whiteRook']
+        expected_board = [
+            ['blackRook', 'blackKnight', 'blackBishop', 'blackQueen',
+             'blackKing', 'blackBishop', 'blackKnight', 'blackRook'],
+            ['blackPawn', 'blackPawn', 'blackPawn', 'blackPawn',
+             'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['whitePawn', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['noPiece', 'whitePawn', 'whitePawn', 'whitePawn',
+             'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn'],
+            ['whiteRook', 'whiteKnight', 'whiteBishop', 'whiteQueen',
+             'whiteKing', 'whiteBishop', 'whiteKnight', 'whiteRook']
         ]
         board = response.json["board_data"]
         assert expected_board == board
@@ -48,14 +55,22 @@ class TestIntegrations(TestCase):
         response_json = response.json
         assert response_json["status_code"] == 200
         assert response_json["board_data"] == [
-            ['blackRook', 'blackKnight', 'blackBishop', 'blackQueen', 'blackKing', 'blackBishop', 'blackKnight', 'blackRook'],
-            ['blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece', 'noPiece'],
-            ['whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn'],
-            ['whiteRook', 'whiteKnight', 'whiteBishop', 'whiteQueen', 'whiteKing', 'whiteBishop', 'whiteKnight', 'whiteRook']
+            ['blackRook', 'blackKnight', 'blackBishop', 'blackQueen',
+             'blackKing', 'blackBishop', 'blackKnight', 'blackRook'],
+            ['blackPawn', 'blackPawn', 'blackPawn', 'blackPawn',
+             'blackPawn', 'blackPawn', 'blackPawn', 'blackPawn'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['noPiece', 'noPiece', 'noPiece', 'noPiece',
+             'noPiece', 'noPiece', 'noPiece', 'noPiece'],
+            ['whitePawn', 'whitePawn', 'whitePawn', 'whitePawn',
+             'whitePawn', 'whitePawn', 'whitePawn', 'whitePawn'],
+            ['whiteRook', 'whiteKnight', 'whiteBishop', 'whiteQueen',
+             'whiteKing', 'whiteBishop', 'whiteKnight', 'whiteRook']
         ]
-        assert response_json["won"] == False
-        assert response_json["lost"] == True
+        assert response_json["won"] is False
+        assert response_json["lost"] is True

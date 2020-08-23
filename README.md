@@ -133,6 +133,7 @@ Or if game could not be started because server is full:
     "move_data": JSON[],
     "won": Boolean,
     "lost": Boolean,
+    "draw": Boolean,
     "is_check": Boolean
 }
 ```

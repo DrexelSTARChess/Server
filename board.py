@@ -311,9 +311,10 @@ class Board:
                 # print("SHOULD FIRE")
                 self.movePieceFast(fx, fy, tx, ty)
                 self.board[fx][fy+1] = "noPiece"
-
+            elif piece.rep == "P" and abs(fx-tx) == 1 and self.isSquareEmpty(tx, ty):
+                piece.notMoved = False
+                self.movePieceFast(fx, fy, tx, ty)
             elif not self.isSquareEmpty(tx, ty):
-
                 self.takePieceFast(fx, fy, tx, ty)
             else:
                 self.movePieceFast(fx, fy, tx, ty)

@@ -416,7 +416,7 @@ class Board:
                 else:
                     self.board[0][move[1]] = Queen(player_color, 0, move[1])
                     self.board[1][move[1]] = "noPiece"
-            elif not self.is_square_empty(7, move[1]) and\
+            elif not self.is_square_empty(6, move[1]) and\
                     self.board[7][move[1]].rep == "P" and \
                     self.board[1][move[1]].color == "black":
                 if move[2:] == [20, 20]:

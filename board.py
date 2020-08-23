@@ -395,22 +395,22 @@ class Board:
                 self.move_piece_fast(7, 4, 7, 2)
                 self.move_piece_fast(7, 0, 7, 3)
         elif move == [0, 4, 0, 2]:  # black queenside castle
-                self.board[0][4].can_castle = False
-                self.board[0][7].can_castle = False
-                self.board[0][0].can_castle = False
-                self.move_piece_fast(0, 4, 0, 2)
-                self.move_piece_fast(0, 0, 0, 3)
-        elif sum(move) >= 20:  # short hand for types of promotions
+                    self.board[0][4].can_castle = False
+                    self.board[0][7].can_castle = False
+                    self.board[0][0].can_castle = False
+                    self.move_piece_fast(0, 4, 0, 2)
+                    self.move_piece_fast(0, 0, 0, 3)
+        elif sum(move) >= 40:  # short hand for types of promotions
             if not self.is_square_empty(1, move[1]) and\
                     self.board[1][move[1]].rep == "P" and \
                     self.board[1][move[1]].color == "white":
-                if move[2:] == [10, 10]:
+                if move[2:] == [20, 20]:
                     self.board[0][move[1]] = Knight(player_color, 0, move[1])
                     self.board[1][move[1]] = "noPiece"
-                elif move[2:] == [20, 20]:
+                elif move[2:] == [30, 30]:
                     self.board[0][move[1]] = Bishop(player_color, 0, move[1])
                     self.board[1][move[1]] = "noPiece"
-                elif move[2:] == [30, 30]:
+                elif move[2:] == [40, 40]:
                     self.board[0][move[1]] = Rook(player_color, 0, move[1])
                     self.board[0][move[1]].can_castle = False
                     self.board[1][move[1]] = "noPiece"
@@ -420,13 +420,13 @@ class Board:
             elif not self.is_square_empty(7, move[1]) and\
                     self.board[7][move[1]].rep == "P" and \
                     self.board[1][move[1]].color == "black":
-                if move[2:] == [10, 10]:
+                if move[2:] == [20, 20]:
                     self.board[7][move[1]] = Knight(player_color, 7, move[1])
                     self.board[6][move[1]] = "noPiece"
-                elif move[2:] == [20, 20]:
+                elif move[2:] == [30, 30]:
                     self.board[7][move[1]] = Bishop(player_color, 7, move[1])
                     self.board[6][move[1]] = "noPiece"
-                elif move[2:] == [30, 30]:
+                elif move[2:] == [40, 40]:
                     self.board[7][move[1]] = Rook(player_color, 7, move[1])
                     self.board[7][move[1]].can_castle = False
                     self.board[6][move[1]] = "noPiece"

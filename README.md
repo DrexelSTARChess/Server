@@ -110,7 +110,7 @@ Or if game could not be started because server is full:
     "board_data": String[8][8],
     "move_data": JSON[],
     "won": Boolean,
-    "lost": Boolean,
+    "lost": Boolean
 }
 ```
 
@@ -133,6 +133,7 @@ Or if game could not be started because server is full:
     "move_data": JSON[],
     "won": Boolean,
     "lost": Boolean,
+    "is_check": Boolean
 }
 ```
 
@@ -146,7 +147,7 @@ Or if game could not be started because server is full:
     "board_data": String[8][8],
     "move_data": JSON[],
     "won": False,
-    "lost": True,
+    "lost": True
 }
 ```
 

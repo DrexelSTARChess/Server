@@ -108,8 +108,8 @@ def wait_for_player():
 					"status_code": 200,
 					"board_data": server_to_client(board),
 					"move_data": board.getLegalMoves(player_num_to_color[player_number]),
-                                        "won": False,
-                                        "lost": False
+					"won": False,
+					"lost": False
 				}
 			)
 
@@ -135,7 +135,8 @@ def wait_for_turn():
 				"board_data": server_to_client(board),
 				"move_data": [],
 				"won": True,
-				"lost": False
+				"lost": False,
+				"is_check": board.isCheck(players[player_number].color)
 			}
 		)
 
@@ -157,6 +158,7 @@ def wait_for_turn():
 				"move_data": [],
 				"won": False,
 				"lost": True,
+				"is_check": board.isCheck(players[player_number].color)
 			}
 		)
 
@@ -167,7 +169,8 @@ def wait_for_turn():
 			"board_data": server_to_client(board),
 			"move_data": moves,
 			"won": False,
-			"lost": False
+			"lost": False,
+			"is_check": board.isCheck(players[player_number].color)
 		}
 	)
 

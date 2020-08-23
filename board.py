@@ -294,12 +294,48 @@ class Board:
                             take_y = int(parse_move[1])
                             new_board.take_piece_fast(i, j, take_x, take_y)
                         elif move.startswith("c"):
-                            if "-" in move:
-                                # queen side castle
-                                legal_moves.append([-1, 0, 0, 0])
-                            else:
-                                # king side castle
-                                legal_moves.append([0, 0, 0, -1])
+                            if player_color == "white":
+                                if "-" in move:
+                                    # queen side castle
+                                    # check every location of the king in castle move
+
+                                    new_board.move_piece_fast(7, 4, 7, 3)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    new_board.move_piece_fast(7, 3, 7, 2)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    #  made it this far, append a white queenside castle
+                                    legal_moves.append([7, 4, 7, 2])
+                                else:  # kingside castle
+                                    new_board.move_piece_fast(7, 4, 7, 5)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    new_board.move_piece_fast(7, 5, 7, 6)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    legal_moves.append([7, 4, 7, 6])
+
+                            else:  # is black
+                                if "-" in move:
+                                    # queen side castle
+                                    # check every location of the king in castle move
+                                    new_board.move_piece_fast(0, 4, 0, 3)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    new_board.move_piece_fast(0, 3, 0, 2)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    #  made it this far, append a black queenside castle
+                                    legal_moves.append([0, 4, 0, 2])
+                                else:  # kingside castle
+                                    new_board.move_piece_fast(0, 4, 0, 5)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    new_board.move_piece_fast(0, 5, 0, 6)
+                                    if new_board.is_check(player_color):
+                                        continue
+                                    legal_moves.append([0, 4, 0, 6])
                         else:
                             parse_move = move.split(",")
                             take_x = int(parse_move[0])
@@ -339,59 +375,64 @@ class Board:
         ty = move[3]
 
         # if we are castling
-        if move == [-1, 0, 0, 0] or\
-                move == [0, 0, 0, -1]:
-            if move == [0, 0, 0, -1]:  # king side castle
-                if player_color == "white":
-                    self.board[7][4].can_castle = False
-                    self.board[7][7].can_castle = False
-                    self.board[7][0].can_castle = False
-                    self.move_piece_fast(7, 4, 7, 6)
-                    self.move_piece_fast(7, 7, 7, 5)
+        if move == [7, 4, 7, 6]:  # white kingside castle
+                self.board[7][4].can_castle = False
+                self.board[7][7].can_castle = False
+                self.board[7][0].can_castle = False
+                self.move_piece_fast(7, 4, 7, 6)
+                self.move_piece_fast(7, 7, 7, 5)
 
-                else:
-                    self.board[0][4].can_castle = False
-                    self.board[0][7].can_castle = False
-                    self.board[0][0].can_castle = False
-                    self.move_piece_fast(0, 4, 0, 6)
-                    self.move_piece_fast(0, 7, 0, 5)
-            else:  # queen side castle
-                if player_color == "white":
+        elif move == [0, 4, 0, 6]:  # black kingside castle
+                self.board[0][4].can_castle = False
+                self.board[0][7].can_castle = False
+                self.board[0][0].can_castle = False
+                self.move_piece_fast(0, 4, 0, 6)
+                self.move_piece_fast(0, 7, 0, 5)
+        elif move == [7, 4, 7, 2]:  # white queenside castle
                     self.board[7][4].can_castle = False
                     self.board[7][7].can_castle = False
                     self.board[7][0].can_castle = False
                     self.move_piece_fast(7, 4, 7, 2)
                     self.move_piece_fast(7, 0, 7, 3)
-                else:
+        elif move == [0, 4, 0, 2]:  # black queenside castle
                     self.board[0][4].can_castle = False
                     self.board[0][7].can_castle = False
                     self.board[0][0].can_castle = False
                     self.move_piece_fast(0, 4, 0, 2)
                     self.move_piece_fast(0, 0, 0, 3)
-        elif sum(move) >= 40:  # short hand for types of promotions
-            for j in range(8):
-                if not self.is_square_empty(0, j) and\
-                        self.board[0][j].rep == "P":
-                    if move == [10, 10, 10, 10]:
-                        self.board[0][j] = Knight(player_color, 0, j)
-                    elif move == [20, 20, 20, 20]:
-                        self.board[0][j] = Bishop(player_color, 0, j)
-                    elif move == [30, 30, 30, 30]:
-                        self.board[0][j] = Rook(player_color, 0, j)
-                        self.board[0][j].can_castle = False
-                    else:
-                        self.board[0][j] = Queen(player_color, 0, j)
-                elif not self.is_square_empty(7, j) and\
-                        self.board[7][j].rep == "P":
-                    if move == [10, 10, 10, 10]:
-                        self.board[7][j] = Knight(player_color, 7, j)
-                    elif move == [20, 20, 20, 20]:
-                        self.board[7][j] = Bishop(player_color, 7, j)
-                    elif move == [30, 30, 30, 30]:
-                        self.board[7][j] = Rook(player_color, 7, j)
-                        self.board[7][j].can_castle = False
-                    else:
-                        self.board[7][j] = Queen(player_color, 7, j)
+        elif sum(move) >= 20:  # short hand for types of promotions
+            if not self.is_square_empty(1, move[1]) and\
+                    self.board[1][move[1]].rep == "P" and \
+                    self.board[1][move[1]].color == "white":
+                if move[2:] == [10, 10]:
+                    self.board[0][move[1]] = Knight(player_color, 0, move[1])
+                    self.board[1][move[1]] = "noPiece"
+                elif move[2:] == [20, 20]:
+                    self.board[0][move[1]] = Bishop(player_color, 0, move[1])
+                    self.board[1][move[1]] = "noPiece"
+                elif move[2:] == [30, 30]:
+                    self.board[0][move[1]] = Rook(player_color, 0, move[1])
+                    self.board[0][move[1]].can_castle = False
+                    self.board[1][move[1]] = "noPiece"
+                else:
+                    self.board[0][move[1]] = Queen(player_color, 0, move[1])
+                    self.board[1][move[1]] = "noPiece"
+            elif not self.is_square_empty(7, move[1]) and\
+                    self.board[7][move[1]].rep == "P" and \
+                    self.board[1][move[1]].color == "black":
+                if move[2:] == [10, 10]:
+                    self.board[7][move[1]] = Knight(player_color, 7, move[1])
+                    self.board[6][move[1]] = "noPiece"
+                elif move[2:] == [20, 20]:
+                    self.board[7][move[1]] = Bishop(player_color, 7, move[1])
+                    self.board[6][move[1]] = "noPiece"
+                elif move[2:] == [30, 30]:
+                    self.board[7][move[1]] = Rook(player_color, 7, move[1])
+                    self.board[7][move[1]].can_castle = False
+                    self.board[6][move[1]] = "noPiece"
+                else:
+                    self.board[7][move[1]] = Queen(player_color, 7, move[1])
+                    self.board[6][move[1]] = "noPiece"
         else:
             piece = self.board[fx][fy]
             if piece.rep == "K":

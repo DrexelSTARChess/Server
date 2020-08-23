@@ -343,7 +343,7 @@ class Board:
     def getWinner(self):
         """This function will return who won the game or if it was a draw"""
         if self.countPieces() == 2:
-            return "draw from pieces"
+            return "draw"
 
         # for i in range(8):
         #     for j in range(8):
@@ -359,12 +359,12 @@ class Board:
             if self.isCheck("white"):
                 return "black"
             else:
-                return "white drawn position"
+                return "draw"
         elif len(self.getLegalMoves("black")) == 0:
             if self.isCheck("black"):
                 return "white"
             else:
-                return "black drawn position"
+                return "draw"
         else:
             return "draw"  # shouldn't really get here
 

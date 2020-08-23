@@ -361,7 +361,7 @@ class Board:
         elif piece_type == "rook":
             self.board[loc[0]][loc[1]] = Rook(pawn_color, loc[0], loc[1])
             self.board[loc[0]][loc[1]].can_castle = False
-        elif piece_type == "Queen":
+        elif piece_type == "queen":
             self.board[loc[0]][loc[1]] = Queen(pawn_color, loc[0], loc[1])
         else:
             return

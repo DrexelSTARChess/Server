@@ -136,19 +136,24 @@ def wait_for_turn():
 				"move_data": [],
 				"won": True,
 				"lost": False,
+				"draw": False,
 				"is_check": board.isCheck(players[player_number].color)
 			}
 		)
 
-	# If game is over, then this player has lost
+	# If game is over, then this player has lost; If draw then neither wins
 	moves = board.getLegalMoves(waiting_player.color)
 	if moves is [] or waiting_player.has_lost:
-		waiting_player.has_lost = True
-		# Making sure the other player is initialized
-		other_player_num = get_other_player_num(player_number)
-		other_player = players[other_player_num]
-		if other_player:
-			players[get_other_player_num(player_number)].has_won = True
+		is_draw = False
+		if board.getWinner() == "draw":
+			is_draw = True
+		else:
+			waiting_player.has_lost = True
+			# Making sure the other player is initialized
+			other_player_num = get_other_player_num(player_number)
+			other_player = players[other_player_num]
+			if other_player:
+				players[get_other_player_num(player_number)].has_won = True
 
 		player_count -= 1
 		return jsonify(
@@ -157,7 +162,8 @@ def wait_for_turn():
 				"board_data": server_to_client(board),
 				"move_data": [],
 				"won": False,
-				"lost": True,
+				"lost": waiting_player.has_lost,
+				"draw": is_draw,
 				"is_check": board.isCheck(players[player_number].color)
 			}
 		)
@@ -170,6 +176,7 @@ def wait_for_turn():
 			"move_data": moves,
 			"won": False,
 			"lost": False,
+			"draw": False,
 			"is_check": board.isCheck(players[player_number].color)
 		}
 	)

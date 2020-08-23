@@ -30,17 +30,23 @@ def client_to_server(board):
             # Create each
             piece_type = board[row_num][column_num][5:]
             if piece_type == "Rook":
-                result[row_num][column_num] = Rook(piece_color, row_num, column_num)
+                result[row_num][column_num] =\
+                    Rook(piece_color, row_num, column_num)
             elif piece_type == "Knight":
-                result[row_num][column_num] = Knight(piece_color, row_num, column_num)
+                result[row_num][column_num] =\
+                    Knight(piece_color, row_num, column_num)
             elif piece_type == "Bishop":
-                result[row_num][column_num] = Bishop(piece_color, row_num, column_num)
+                result[row_num][column_num] =\
+                    Bishop(piece_color, row_num, column_num)
             elif piece_type == "Queen":
-                result[row_num][column_num] = Queen(piece_color, row_num, column_num)
+                result[row_num][column_num] =\
+                    Queen(piece_color, row_num, column_num)
             elif piece_type == "King":
-                result[row_num][column_num] = King(piece_color, row_num, column_num)
+                result[row_num][column_num] =\
+                    King(piece_color, row_num, column_num)
             elif piece_type == "Pawn":
-                result[row_num][column_num] = Pawn(piece_color, row_num, column_num)
+                result[row_num][column_num] =\
+                    Pawn(piece_color, row_num, column_num)
 
     return result
 
@@ -80,22 +86,32 @@ def server_to_client(board_obj):
 
     return result
 
+
 # Some temp tests
 if __name__ == "__main__":
     client_board = [
-	        ["blackRook", "blackKnight", "blackBishop", "blackQueen", "blackKing", "blackBishop", "blackKnight", "blackRook"],
-	        ["blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn", "blackPawn"],
-	        ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
-	        ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
-	        ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
-	        ["noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece", "noPiece"],
-	        ["whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn", "whitePawn"],
-	        ["whiteRook", "whiteKnight", "whiteBishop", "whiteQueen", "whiteKing", "whiteBishop", "whiteKnight", "whiteRook"]
-	    ]
+            ["blackRook", "blackKnight", "blackBishop", "blackQueen",
+             "blackKing", "blackBishop", "blackKnight", "blackRook"],
+            ["blackPawn", "blackPawn", "blackPawn", "blackPawn",
+             "blackPawn", "blackPawn", "blackPawn", "blackPawn"],
+            ["noPiece", "noPiece", "noPiece", "noPiece",
+             "noPiece", "noPiece", "noPiece", "noPiece"],
+            ["noPiece", "noPiece", "noPiece", "noPiece",
+             "noPiece", "noPiece", "noPiece", "noPiece"],
+            ["noPiece", "noPiece", "noPiece", "noPiece",
+             "noPiece", "noPiece", "noPiece", "noPiece"],
+            ["noPiece", "noPiece", "noPiece", "noPiece",
+             "noPiece", "noPiece", "noPiece", "noPiece"],
+            ["whitePawn", "whitePawn", "whitePawn", "whitePawn",
+             "whitePawn", "whitePawn", "whitePawn", "whitePawn"],
+            ["whiteRook", "whiteKnight", "whiteBishop", "whiteQueen",
+             "whiteKing", "whiteBishop", "whiteKnight", "whiteRook"]
+        ]
 
     client_to_server_board = client_to_server(client_board)
     test_board_obj = Board()
-    test_board_obj.setBoard(client_to_server_board)
+    test_board_obj.set_board(client_to_server_board)
     server_to_client_board = server_to_client(test_board_obj)
 
-    print("Do translations function correctly:", client_board == server_to_client_board)
+    print("Do translations function correctly:",
+          client_board == server_to_client_board)

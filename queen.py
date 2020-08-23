@@ -10,4 +10,4 @@ class Queen(ChessPiece):
         self.name = "Queen"
 
     def get_possible_moves(self, board):
-        return self.get_cardinals(board) + self.getDiagnals(board)
+        return self.get_cardinals(board) + self.get_diagonals(board)

@@ -10,4 +10,4 @@ class Bishop(ChessPiece):
         self.name = "Bishop"
 
     def get_possible_moves(self, board):
-        return self.getDiagnals(board)
+        return self.get_diagonals(board)

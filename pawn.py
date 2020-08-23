@@ -7,7 +7,7 @@ class Pawn(ChessPiece):
     def __init__(self, color, i, j):
         super(Pawn, self).__init__(color, i, j)
         self.rep = "P"
-        self.notMoved = True
+        self.not_moved = True
         self.enpassant = False
         self.name = "Pawn"
 
@@ -25,7 +25,7 @@ class Pawn(ChessPiece):
 
         if self.is_bounded_square(self.i + (movement_factor * 2), self.j) and\
                 board[self.i + (movement_factor * 2)][self.j] == "noPiece" and\
-                self.notMoved:
+                self.not_moved:
             move = "%d,%d" % (self.i + (movement_factor*2), self.j)
             # print("triggered for", self.color)
             possible_moves.append(move)

@@ -9,5 +9,5 @@ class Queen(ChessPiece):
         self.rep = "Q"
         self.name = "Queen"
 
-    def getPossibleMoves(self, board):
-        return self.getCardinals(board) + self.getDiagnals(board)
+    def get_possible_moves(self, board):
+        return self.get_cardinals(board) + self.get_diagonals(board)

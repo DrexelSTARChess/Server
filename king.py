@@ -8,37 +8,49 @@ class King(ChessPiece):
         super(King, self).__init__(color, i, j)
         self.rep = "K"
         self.name = "King"
-        self.canCastle = True
+        self.can_castle = True
 
-    def getPossibleMoves(self, board):
-        return self.getKingMoves(board) + self.castle(board)
+    def get_possible_moves(self, board):
+        return self.get_king_moves(board) + self.castle(board)
 
     def castle(self, board):
 
-        castleMoves = []
+        castle_moves = []
         if self.color == "white":
-            if self.canCastle and board[self.i][self.j + 1] == "noPiece" and board[self.i][self.j + 2] == "noPiece" and \
-                            board[self.i][self.j + 3] != "noPiece" and board[self.i][self.j + 3].rep == "R" and \
-                    board[self.i][self.j + 3].canCastle:
+            if self.can_castle and\
+                    board[self.i][self.j + 1] == "noPiece" and\
+                    board[self.i][self.j + 2] == "noPiece" and\
+                    board[self.i][self.j + 3] != "noPiece" and\
+                    board[self.i][self.j + 3].rep == "R" and\
+                    board[self.i][self.j + 3].can_castle:
                 move = "c%d,%d" % (10, 10)
-                castleMoves.append(move)
-            if self.canCastle and board[self.i][self.j - 1] == "noPiece" and board[self.i][self.j - 2] == "noPiece" and \
-                            board[self.i][self.j - 3] == "noPiece" and board[self.i][self.j - 4] != "noPiece" and \
-                            board[self.i][self.j - 4].rep == "R" and \
-                    board[self.i][self.j - 4].canCastle:
+                castle_moves.append(move)
+            if self.can_castle and\
+                    board[self.i][self.j - 1] == "noPiece" and\
+                    board[self.i][self.j - 2] == "noPiece" and\
+                    board[self.i][self.j - 3] == "noPiece" and\
+                    board[self.i][self.j - 4] != "noPiece" and\
+                    board[self.i][self.j - 4].rep == "R" and\
+                    board[self.i][self.j - 4].can_castle:
                 move = "c%d,%d" % (10, -10)
-                castleMoves.append(move)
+                castle_moves.append(move)
         else:
-            if self.canCastle and board[self.i][self.j + 1] == "noPiece" and board[self.i][self.j + 2] == "noPiece" and \
-                            board[self.i][self.j + 3] != "noPiece" and board[self.i][self.j + 3].rep == "R" and \
-                    board[self.i][self.j + 3].canCastle:
+            if self.can_castle and\
+                    board[self.i][self.j + 1] == "noPiece" and\
+                    board[self.i][self.j + 2] == "noPiece" and\
+                    board[self.i][self.j + 3] != "noPiece" and\
+                    board[self.i][self.j + 3].rep == "R" and\
+                    board[self.i][self.j + 3].can_castle:
                 move = "c%d,%d" % (10, 10)
-                castleMoves.append(move)
-            if self.canCastle and board[self.i][self.j - 1] == "noPiece" and board[self.i][self.j - 2] == "noPiece" and \
-                            board[self.i][self.j - 3] == "noPiece" and board[self.i][self.j - 4] != "noPiece" and \
-                            board[self.i][self.j - 4].rep == "R" and \
-                    board[self.i][self.j - 4].canCastle:
+                castle_moves.append(move)
+            if self.can_castle and\
+                    board[self.i][self.j - 1] == "noPiece" and\
+                    board[self.i][self.j - 2] == "noPiece" and\
+                    board[self.i][self.j - 3] == "noPiece" and\
+                    board[self.i][self.j - 4] != "noPiece" and\
+                    board[self.i][self.j - 4].rep == "R" and\
+                    board[self.i][self.j - 4].can_castle:
                 move = "c%d,%d" % (10, -10)
-                castleMoves.append(move)
+                castle_moves.append(move)
 
-        return castleMoves
+        return castle_moves

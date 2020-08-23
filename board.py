@@ -347,6 +347,7 @@ class Board:
         return legal_moves
 
     def pawn_promotion(self, piece_type, loc):
+        pawn_color = ""
         # get color
         if not self.is_square_empty(loc[0], loc[1]) and self.board[loc[0]][loc[1]].rep == "P":
             pawn_color = self.board[loc[0]][loc[1]].color

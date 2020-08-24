@@ -174,7 +174,7 @@ class TestLogic(TestCase):
         b.move_piece_fast(7, 1, 5, 1)
         # BUG FOUND HERE, SOLVED
         print(b.board[7][4].get_possible_moves(b.board))
-        b.apply_move("white", [0, 0, 0, -1])
+        b.apply_move("white", [7, 4, 7, 6])
         assert b.board[7][6].rep == "K" and\
                b.board[7][5].rep == "R" and\
                b.board[7][7] == "noPiece"
@@ -189,7 +189,7 @@ class TestLogic(TestCase):
         b.move_piece_fast(7, 1, 5, 1)
         # BUG FOUND HERE, SOLVED
         print(b.board[7][4].get_possible_moves(b.board))
-        b.apply_move("white", [-1, 0, 0, 0])
+        b.apply_move("white", [7, 4, 7, 2])
         assert b.board[7][2].rep == "K" and\
                b.board[7][3].rep == "R" and\
                b.board[7][1] == "noPiece"

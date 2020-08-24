@@ -294,6 +294,8 @@ class Board:
                             take_y = int(parse_move[1])
                             new_board.take_piece_fast(i, j, take_x, take_y)
                         elif move.startswith("c"):
+                            if self.is_check(player_color):
+                                continue
                             if player_color == "white":
                                 if "-" in move:
                                     # queen side castle

@@ -25,6 +25,7 @@ class TestIntegrations(TestCase):
         response = self.client1.post('/submitBoard', json={
             "player_number": 1,
             "player_move": [6, 0, 5, 0],
+            "pawn_promotion": ""
         })
         assert response.json["status_code"] == 200
         expected_board = [
